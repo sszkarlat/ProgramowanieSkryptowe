@@ -1,58 +1,40 @@
 import sys
 import json
 
+nazwa_pliku = "magazyn.json"
 
-# Funkcja do wczytywania magazynu z pliku JSON
+
 def wczytaj_magazyn(nazwa_pliku):
-    try:
-        with open(nazwa_pliku, "r") as plik:
-            return json.load(plik)
-    except FileNotFoundError:
-        return {}
+    with open(nazwa_pliku, "r") as plik:
+        return json.load(plik)
 
 
-# Funkcja do zapisywania magazynu do pliku JSON
 def zapisz_magazyn(nazwa_pliku, magazyn):
     with open(nazwa_pliku, "w") as plik:
         json.dump(magazyn, plik)
 
 
-# Pobierz nazwę pliku JSON z argumentów wiersza poleceń
-if len(sys.argv) < 2:
-    print("Podaj nazwę pliku JSON z magazynem.")
-    sys.exit(1)
-
-nazwa_pliku = sys.argv[1]
-
-# Wczytaj magazyn z pliku JSON
 magazyn = wczytaj_magazyn(nazwa_pliku)
 
 
-def sprzedaz_towaru(magazyn):
-    lista = sys.argv[2:-1]
+def sprzedaz_towaru(magazyn, lista_sprzedazy):
     nowy_magazyn = magazyn.copy()
 
-    for i in range(0, len(lista), 2):
-        produkt = lista[i]
-        ilosc = int(lista[i + 1])
+    for i in range(0, len(lista_sprzedazy), 2):
+        produkt = lista_sprzedazy[i]
+        ilosc = int(lista_sprzedazy[i + 1])
 
-        if produkt in magazyn:
-            if isinstance(ilosc, int) and ilosc > 0:
-                if produkt in nowy_magazyn:
+        if produkt in nowy_magazyn:
+            if ilosc <= nowy_magazyn[produkt]:
+                if ilosc > 0:
                     nowy_magazyn[produkt] -= ilosc
                 else:
-                    print(f"Produkt {produkt} nie istnieje w magazynie.")
+                    print(f"Nie możesz kupić ujemnej liczby sztuk produktu: {produkt}")
             else:
-                print(f"Ilość produktu {produkt} nie jest liczbą całkowitą: {ilosc}")
+                print(f"Nie ma tylu sztuk produktu: {produkt} w magazynie")
         else:
-            print(f"Produkt {produkt} nie istnieje w magazynie.")
-
-    for produkt, ilosc in nowy_magazyn.items():
-        if ilosc <= magazyn[produkt]:
-            magazyn[produkt] -= ilosc
-        else:
-            print(f"Nie ma tyle sztuk produktu: {produkt}")
-    return magazyn
+            print(f"Produkt: {produkt} nie istnieje w magazynie.")
+    return nowy_magazyn
 
 
 def stan_sklepu(magazyn):
@@ -67,7 +49,7 @@ Nazwa towaru | Ilość sztuk
 
 if __name__ == "__main__":
     if sys.argv[-1] == "--stan_magazynu":
-        magazyn = sprzedaz_towaru(magazyn)
+        lista_sprzedazy_sprzedazy = sys.argv[1:-1]
+        magazyn = sprzedaz_towaru(magazyn, lista_sprzedazy_sprzedazy)
         stan_sklepu(magazyn)
-        # Zapisz zmodyfikowany magazyn do pliku JSON
         zapisz_magazyn(nazwa_pliku, magazyn)
