@@ -18,23 +18,21 @@ def zapisz_magazyn(nazwaPliku, magazyn):
 
 
 def sprzedaz_towaru(magazyn, listaZyczen):
-    nowyMagazyn = magazyn.copy()
-
     for i in range(0, len(listaZyczen), 2):
         produkt = listaZyczen[i]
         ilosc = int(listaZyczen[i + 1])
 
-        if produkt in nowyMagazyn:
+        if produkt in magazyn:
             if ilosc >= 0:
-                if ilosc <= nowyMagazyn[produkt]:
-                    nowyMagazyn[produkt] -= ilosc
+                if ilosc <= magazyn[produkt]:
+                    magazyn[produkt] -= ilosc
                 else:
                     print(f"W magazynie nie ma tylu sztuk produktu: {produkt}.")
             else:
                 print(f"Nie można kupić ujemnej liczby sztuk produktu: {produkt}.")
         else:
             print(f"Produktu: {produkt} nie ma w magazynie.")
-    return nowyMagazyn
+    return magazyn
 
 
 def stan_sklepu(magazyn):
@@ -50,6 +48,6 @@ Nazwa towaru | Ilość sztuk
 if __name__ == "__main__":
     if sys.argv[-1] == "--stan_sklepu":
         listaZyczen = sys.argv[1:-1]
-        nowyMagazyn = sprzedaz_towaru(magazyn, listaZyczen)
-        stan_sklepu(nowyMagazyn)
-        zapisz_magazyn(nazwaPliku, nowyMagazyn)
+        magazyn = sprzedaz_towaru(magazyn, listaZyczen)
+        stan_sklepu(magazyn)
+        zapisz_magazyn(nazwaPliku, magazyn)

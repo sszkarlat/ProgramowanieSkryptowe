@@ -1,1 +1,4 @@
-{"Komputer": 0, "Laptop": 0}
+{
+    "Komputer": 20,
+    "Laptop": 10
+}
