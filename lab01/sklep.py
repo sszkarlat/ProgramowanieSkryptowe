@@ -3,31 +3,24 @@ import sys
 magazyn = {"Komputer": 10, "Laptop": 20}
 
 
-def sprzedaz_towaru(magazyn):
-    lista = sys.argv[1:-1]
-    nowy_magazyn = {}
+def sprzedaz_towaru(magazyn, listaZyczen):
+    nowyMagazyn = magazyn.copy()
 
-    for i in range(0, len(lista), 2):
-        produkt = lista[i]
-        ilosc = int(lista[i + 1])
+    for i in range(0, len(listaZyczen), 2):
+        produkt = listaZyczen[i]
+        ilosc = int(listaZyczen[i + 1])
 
-        if produkt in magazyn:
-            if isinstance(ilosc, int) and ilosc > 0:
-                if produkt in nowy_magazyn:
-                    nowy_magazyn[produkt] += ilosc
+        if produkt in nowyMagazyn:
+            if ilosc > 0:
+                if ilosc <= nowyMagazyn[produkt]:
+                    nowyMagazyn[produkt] -= ilosc
                 else:
-                    nowy_magazyn[produkt] = ilosc
+                    print(f"W magazynie nie ma tylu sztuk produktu: {produkt}.")
             else:
-                print(f"Ilość produktu {produkt} nie jest liczbą całkowitą: {ilosc}")
+                print(f"Nie można kupić ujemnej liczby sztuk produktu: {produkt}.")
         else:
-            print(f"Produkt {produkt} nie istnieje w magazynie.")
-
-    for produkt, ilosc in nowy_magazyn.items():
-        if ilosc <= magazyn[produkt]:
-            magazyn[produkt] -= ilosc
-        else:
-            print(f"Nie ma tyle sztuk produktu: {produkt}")
-    return magazyn
+            print(f"Produktu: {produkt} nie ma w magazynie.")
+    return nowyMagazyn
 
 
 def stan_sklepu(magazyn):
@@ -41,6 +34,7 @@ Nazwa towaru | Ilość sztuk
 
 
 if __name__ == "__main__":
-    if sys.argv[-1] == "--stan_magazynu":
-        sprzedaz_towaru(magazyn)
-        stan_sklepu(magazyn)
+    if sys.argv[-1] == "--stan_sklepu":
+        listaZyczen = sys.argv[1:-1]
+        nowyMagazyn = sprzedaz_towaru(magazyn, listaZyczen)
+        stan_sklepu(nowyMagazyn)
