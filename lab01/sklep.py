@@ -11,7 +11,7 @@ def sprzedaz_towaru(magazyn, listaZyczen):
         ilosc = int(listaZyczen[i + 1])
 
         if produkt in nowyMagazyn:
-            if ilosc > 0:
+            if ilosc >= 0:
                 if ilosc <= nowyMagazyn[produkt]:
                     nowyMagazyn[produkt] -= ilosc
                 else:
