@@ -16,7 +16,7 @@ if sys.argv[1] == "cut":
     from cut import cut
 
     cut(operations, inputData)
-elif sys.argv[1] == "cut":
+elif sys.argv[1] == "grep":
     from grep import grep
 
     grep(operations, inputData)

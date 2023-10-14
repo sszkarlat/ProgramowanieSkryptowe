@@ -1,8 +1,8 @@
 import sys
 
 # options = sys.argv[1:]
-options = ["-i", "bin"]
-inputData = ["/usr/sbin/nologin", "/bin/sync", "/BIN/"]
+# options = ["-i", "bin"]
+# inputData = ["/usr/sbin/nologin", "/bin/sync", "/BIN/"]
 
 
 def sprawdzenie_separator(inputData):
@@ -47,10 +47,13 @@ def grep(options, inputData):
                         if k == pattern:
                             outData.append(inputData[j])
         else:
-            break
+            pattern = options[i]
+            for j in inputData:
+                if pattern in j:
+                    outData.append(j)
 
     for line in outData:
         print(line)
 
 
-grep(options, inputData)
+# grep(options, inputData)
