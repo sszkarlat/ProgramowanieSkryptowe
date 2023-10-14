@@ -1,4 +1,4 @@
-import cut
+import sys
 
 
 def user_enter_data():
@@ -11,4 +11,14 @@ def user_enter_data():
 
 
 inputData = user_enter_data()
-cut(["-d", ":", "-f", "1"])
+operations = sys.argv[2:]
+if sys.argv[1] == "cut":
+    from cut import cut
+
+    cut(operations, inputData)
+elif sys.argv[1] == "cut":
+    from grep import grep
+
+    grep(operations, inputData)
+else:
+    print("Nie ma takiego polecenia!")
