@@ -1,7 +1,35 @@
 import argparse
-from cut import cut
-from grep import grep
+from grep import sprawdzenie_separator
 import operations
+
+
+def cut(delimiter, field, inputData):
+    for i in inputData:
+        print(i.split(delimiter)[field])
+
+
+def grep(ignore_case, whole_word, pattern, inputData):
+    outData = []
+    separator = sprawdzenie_separator(inputData)
+    inputDataSplit = [j.split(separator) for j in inputData]
+
+    for j, line in enumerate(inputData):
+        for k in inputDataSplit[j]:
+            if ignore_case:
+                if pattern.lower() in k.lower():
+                    if whole_word and k.lower() == pattern.lower():
+                        outData.append(line)
+                    elif not whole_word:
+                        outData.append(line)
+            elif not ignore_case:
+                if pattern in k:
+                    if whole_word and k == pattern:
+                        outData.append(line)
+                    elif not whole_word:
+                        outData.append(line)
+
+    for line in outData:
+        print(line)
 
 
 def user_enter_data():
@@ -22,14 +50,17 @@ def main():
     # Subparser for "cut" command
     cut_parser = subparsers.add_parser("cut", help="Cut command")
     cut_parser.add_argument(
-        "arguments", nargs="*", help="Additional arguments for the 'cut' command"
+        "-d", dest="delimiter", help="Delimiter for the 'cut' command"
     )
+    cut_parser.add_argument("-f", dest="field", help="Field for the 'cut' command")
 
     # Subparser for "grep" command
     grep_parser = subparsers.add_parser("grep", help="Grep command")
     grep_parser.add_argument(
-        "arguments", nargs="*", help="Additional arguments for the 'grep' command"
+        "-i", action="store_true", help="Perform a case-insensitive search"
     )
+    grep_parser.add_argument("-w", action="store_true", help="Match whole words")
+    grep_parser.add_argument("pattern", help="Search pattern")
 
     # Subparser for "string operations" command
     operations_parser = subparsers.add_parser(
@@ -40,9 +71,14 @@ def main():
     args = parser.parse_args()
 
     if args.command == "cut":
-        cut(args.arguments, user_enter_data())
+        delimiter = args.delimiter
+        field = args.field
+        cut(delimiter, int(field) - 1, user_enter_data())
     elif args.command == "grep":
-        grep(args.arguments, user_enter_data())
+        ignore_case = args.i
+        whole_word = args.w
+        pattern = args.pattern
+        grep(ignore_case, whole_word, pattern, user_enter_data())
     elif args.command == "string_operations":
         string = args.string
         print(
