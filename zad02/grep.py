@@ -1,56 +1,48 @@
 import sys
+import re
 
 # options = sys.argv[1:]
-# options = ["-i", "bin"]
+# options = ["-w", "sbin"]
 # inputData = ["/usr/sbin/nologin", "/bin/sync", "/BIN/"]
 
 
-def find_separator(inputData):
-    if "/" in inputData[0]:
-        separator = "/"
-    elif " " in inputData[0]:
-        separator = " "
-    elif ":" in inputData[0]:
-        separator = ":"
-
-    return separator
+def word_between_separator(pattern, text):
+    patternRegex = re.compile(r"\b" + pattern)
+    return bool(patternRegex.search(text))
 
 
 def grep(options, inputData):
     outData = []
-    separator = find_separator(inputData)
-    inputDataSplit = [j.split(separator) for j in inputData]
     for i in range(0, len(options), 2):
-        if options[i] == "-i":
-            if options[i + 1] == "-w":
-                pattern = options[i + 2]
-                for j in range(len(inputDataSplit)):
-                    for k in inputDataSplit[j]:
-                        if k.lower() == pattern.lower():
-                            outData.append(inputData[j])
-            else:
-                pattern = options[i + 1]
-                for j in inputData:
-                    if pattern.lower() in j.lower():
-                        outData.append(j)
-        elif options[i] == "-w":
+        if options[i] == "-w":
             if options[i + 1] == "-i":
                 pattern = options[i + 2]
-                for j in range(len(inputDataSplit)):
-                    for k in inputDataSplit[j]:
-                        if k.lower() == pattern.lower():
-                            outData.append(inputData[j])
+                for line in inputData:
+                    if word_between_separator(pattern.lower(), line.lower()):
+                        outData.append(line)
+                break
             else:
                 pattern = options[i + 1]
-                for j in range(len(inputDataSplit)):
-                    for k in inputDataSplit[j]:
-                        if k == pattern:
-                            outData.append(inputData[j])
+                for line in inputData:
+                    if word_between_separator(pattern, line):
+                        outData.append(line)
+        elif options[i] == "-i":
+            if options[i + 1] == "-w":
+                pattern = options[i + 2]
+                for line in inputData:
+                    if word_between_separator(pattern.lower(), line.lower()):
+                        outData.append(line)
+                break
+            else:
+                pattern = options[i + 1]
+                for line in inputData:
+                    if pattern.lower() in line.lower():
+                        outData.append(line)
         else:
             pattern = options[i]
-            for j in inputData:
-                if pattern in j:
-                    outData.append(j)
+            for line in inputData:
+                if pattern in line:
+                    outData.append(line)
 
     for line in outData:
         print(line)
