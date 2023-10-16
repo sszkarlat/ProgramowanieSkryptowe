@@ -5,7 +5,7 @@ import sys
 # inputData = ["/usr/sbin/nologin", "/bin/sync", "/BIN/"]
 
 
-def sprawdzenie_separator(inputData):
+def find_separator(inputData):
     if "/" in inputData[0]:
         separator = "/"
     elif " " in inputData[0]:
@@ -18,7 +18,7 @@ def sprawdzenie_separator(inputData):
 
 def grep(options, inputData):
     outData = []
-    separator = sprawdzenie_separator(inputData)
+    separator = find_separator(inputData)
     inputDataSplit = [j.split(separator) for j in inputData]
     for i in range(0, len(options), 2):
         if options[i] == "-i":
