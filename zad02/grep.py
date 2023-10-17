@@ -2,12 +2,12 @@ import sys
 import re
 
 # options = sys.argv[1:]
-# options = ["-w", "sbin"]
-# inputData = ["/usr/sbin/nologin", "/bin/sync", "/BIN/"]
+# options = ["-w", "-i", "cis"]
+# inputData = ["/cis/fis/nologin", "/mis/cisowianka", "/BIN/"]
 
 
 def word_between_separator(pattern, text):
-    patternRegex = re.compile(r"\b" + pattern)
+    patternRegex = re.compile(r"\b" + pattern + r"\b")
     return bool(patternRegex.search(text))
 
 
