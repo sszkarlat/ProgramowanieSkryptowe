@@ -1,0 +1,4 @@
+komputer
+10
+laptop
+2
