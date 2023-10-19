@@ -60,17 +60,6 @@ def user_dictionary(inputData, dictionaries):
                             dictionary[dataList[i]] = int(dataList[i + 1])
 
 
-def add_to_dictionary(inputDataList):
-    warehouse = {}
-    for i in range(len(inputDataList)):
-        if bool(re.search(r"[_]", inputDataList[i])):
-            name = inputDataList[i]
-            warehouse[name] = []
-        else:
-            warehouse[name].append(inputDataList[i])
-    return warehouse
-
-
 def sell_products(inputData, warehouseDict):
     # print(inputData)
     for data in inputData:
@@ -134,11 +123,16 @@ if __name__ == "__main__":
                 elif inputDataList[0] == "sell":
                     for i in range(1, len(inputDataList)):
                         if check_format(inputDataList[i]):
-                            sell_products(inputDataList[1:], warehouseDict)
-                            user_dictionary(inputDataList[1:], dictionaries)
+                            flag = True
                         else:
                             print("Niepoprawny format komendy")
-                    # print(dictionaries)
+                            flag = False
+                    if flag == True:
+                        sell_products(inputDataList[1:], warehouseDict)
+                        user_dictionary(inputDataList[1:], dictionaries)
+                    else:
+                        continue
+                    print(dictionaries)
                 elif inputDataList[0] == "show":
                     show_user_products(inputDataList[1::2])
                     # print(inputDataList[1::2])

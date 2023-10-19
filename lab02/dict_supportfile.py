@@ -36,6 +36,7 @@ def user_dictionary(inputData, dictionaries):
 inputData = "sell Jan_Kowalski:Komputer(1):Laptop(5) Anna_Nowak:Komputer(2)"
 dictionaries = []
 user_data = inputData.split(" ")[1:]
+print(user_data)
 user_dictionary(user_data, dictionaries)
 print(dictionaries)
 user_dictionary(user_data, dictionaries)
