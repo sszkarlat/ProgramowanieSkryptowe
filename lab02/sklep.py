@@ -93,7 +93,7 @@ def sell_products(inputData, warehouseDict):
                 else:
                     print(f"Nie można wybrać ujemnej liczby towaru: {product}")
             else:
-                print(f"Nie ma towaru: {product} w magazynie")
+                print(f"{product} - nie ma takiego towaru")
 
 
 def show_user_products(users):
@@ -115,25 +115,37 @@ Nazwa towaru | Ilość sztuk
         print("")
 
 
+def check_format(text):
+    checkRegex = re.compile(r"\w*_\w*(:\w+\(\d\))+")
+    return bool(checkRegex.search(text))
+
+
 dictionaries = []
 
 if __name__ == "__main__":
-    warehouseDict = load_input_data(file)
     try:
-        while True:
-            inputDataList = (input("> ")).split(" ")
-            # print(inputDataList)
-            if inputDataList[0] == "warehouse":
-                display_warehouse_state(warehouseDict)
-            elif inputDataList[0] == "sell":
-                sell_products(inputDataList[1:], warehouseDict)
-                user_dictionary(inputDataList[1:], dictionaries)
-                print(dictionaries)
-            elif inputDataList[0] == "show":
-                show_user_products(inputDataList[1::2])
-                print(inputDataList[1::2])
-            else:
-                print("Nieznana komenda")
+        warehouseDict = load_input_data(file)
+        try:
+            while True:
+                inputDataList = (input("> ")).split(" ")
+                # print(inputDataList)
+                if inputDataList[0] == "warehouse":
+                    display_warehouse_state(warehouseDict)
+                elif inputDataList[0] == "sell":
+                    for i in range(1, len(inputDataList)):
+                        if check_format(inputDataList[i]):
+                            sell_products(inputDataList[1:], warehouseDict)
+                            user_dictionary(inputDataList[1:], dictionaries)
+                        else:
+                            print("Niepoprawny format komendy")
+                    # print(dictionaries)
+                elif inputDataList[0] == "show":
+                    show_user_products(inputDataList[1::2])
+                    # print(inputDataList[1::2])
+                else:
+                    print("Nieznana komenda")
 
-    except EOFError:
-        exit()
+        except EOFError:
+            exit()
+    except FileNotFoundError:
+        print("Nieprawidłowa nazwa pliku!")
