@@ -1,4 +1,7 @@
 import sys
+import importlib
+
+command = importlib.import_module("grep")
 
 
 def user_enter_data():

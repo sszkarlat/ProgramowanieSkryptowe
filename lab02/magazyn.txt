@@ -1,4 +1,4 @@
-komputer
+Komputer
+20
+Laptop
 10
-laptop
-2
