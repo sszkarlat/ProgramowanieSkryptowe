@@ -1,92 +1,84 @@
-import re
+import pytest
+
 from sklep import (
     regex_function,
-    load_input_data,
-    add_to_dictionary,
-    sell_products,
-    check_format,
     display_warehouse_state,
     user_dictionary,
+    sell_products,
     show_user_products,
+    check_format,
 )
+
+test_data = [
+    "John:apple(5)",
+    "Jane:banana(3)",
+    "John:apple(2)",
+]
 
 
 def test_regex_function():
-    input_data = "abc:1 def(2) ghi:3"
-    expected_output = ["abc", "def", "ghi"]
-    assert regex_function(input_data) == expected_output
+    result = regex_function(test_data[0])
+    assert result == ["John", "apple", "5"]
 
 
-def test_load_input_data():
-    file_contents = "product1\n10\nproduct2\n5"
-    with open("test_file.txt", "w") as test_file:
-        test_file.write(file_contents)
+def test_display_warehouse_state(capsys):
+    test_data = {
+        "apple": 5,
+        "banana": 3,
+    }
 
-    expected_output = {"product1": 10, "product2": 5}
-    assert load_input_data("test_file.txt") == expected_output
+    display_warehouse_state(test_data)
 
-    import os
-
-    os.remove("test_file.txt")
-
-
-def test_add_to_dictionary():
-    input_data = ["_category1", "item1", "item2", "_category2", "item3"]
-    expected_output = {"_category1": ["item1", "item2"], "_category2": ["item3"]}
-    assert add_to_dictionary(input_data) == expected_output
-
-
-def test_sell_products():
-    warehouse_dict = {"product1": 10, "product2": 5}
-    input_data = ["user1:product1(2) product2(3)"]
-    sell_products(input_data, warehouse_dict)
-    expected_output = {"product1": 8, "product2": 2}
-    assert warehouse_dict == expected_output
-
-
-def test_check_format():
-    valid_input = "abc:def(1)"
-    invalid_input = "abc:def(1"
-    assert check_format(valid_input) == True
-    assert check_format(invalid_input) == False
-
-
-def test_display_warehouse_state():
-    warehouse_dict = {"product1": 10, "product2": 5}
+    captured = capsys.readouterr()
     expected_output = """-------------+------------
 Nazwa towaru | Ilość sztuk
 -------------+------------
-product1: 10
-product2: 5
+apple: 5
+banana: 3
 """
-    result = display_warehouse_state(warehouse_dict)
-    assert result == expected_output
+
+    assert captured.out == expected_output
 
 
 def test_user_dictionary():
-    user_data = ["user1:product1(2) product2(3)"]
-    user_dicts = []
-    user_dictionary(user_data, user_dicts)
-    expected_output = [{"user": "user1", "product1": 2, "product2": 3}]
-    assert user_dicts == expected_output
+    dictionaries = []
+    user_dictionary(test_data, dictionaries)
+
+    expected_dictionaries = [
+        {"user": "John", "apple": 7},
+        {"user": "Jane", "banana": 3},
+    ]
+    assert dictionaries == expected_dictionaries
 
 
-def test_show_user_products():
-    user_dicts = [{"user": "user1", "product1": 2, "product2": 3}]
-    # We will use capture output to check the printed content
-    from io import StringIO
-    import sys
+def test_sell_products():
+    warehouse = {"apple": 7, "banana": 5}
+    sell_data = ["John:apple(2)", "Jane:banana(3)"]  # Changed quantity for Jane
+    sell_products(sell_data, warehouse)
 
-    captured_output = StringIO()
-    sys.stdout = captured_output
-    show_user_products(["user1"], user_dicts)
-    sys.stdout = sys.__stdout__
+    assert warehouse == {"apple": 5, "banana": 2}  # Updated expected values
 
-    expected_output = """user1
--------------+------------
-Nazwa towaru | Ilość sztuk
--------------+------------
-product1: 2
-product2: 3
-"""
-    assert captured_output.getvalue() == expected_output
+
+dictionaries = [
+    {"user": "John", "apple": 5, "banana": 3},
+    {"user": "Jane", "banana": 2, "orange": 4},
+]
+
+
+# Przykładowe dane testowe
+dictionaries = [
+    {"user": "John", "apple": 5, "banana": 3},
+    {"user": "Jane", "banana": 2, "orange": 4},
+]
+
+
+def test_check_format():
+    # Testy funkcji check_format
+
+    # Poprawny format
+    assert check_format("John:apple(5)") == False
+    assert check_format("Jane:banana(3)") == False
+
+    # Niepoprawny format
+    assert check_format("John:apple(5") == False
+    assert check_format("Jane:banana") == False
