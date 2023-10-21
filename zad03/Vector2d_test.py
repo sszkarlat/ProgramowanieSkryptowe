@@ -1,4 +1,4 @@
-from Vector2d import Vector2d  # Zaimportuj klasę Vector2d z twojego modułu
+from Vector2d import Vector2d
 
 
 def test_get_x():

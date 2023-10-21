@@ -1,3 +1,8 @@
 from enum import Enum
 
-MoveDirection = Enum("MoveDirection", ["FORWARD", "BACKWARD", "LEFT", "RIGHT"])
+
+class MoveDirection(Enum):
+    FORWARD = "FORWARD"
+    BACKWARD = "BACKWARD"
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
