@@ -48,16 +48,18 @@ def user_dictionary(inputData, dictionaries):
         if not user_exists:
             newDictionary = {"user": user_name}
             for i in range(1, len(dataList), 2):
-                newDictionary[dataList[i]] = int(dataList[i + 1])
+                if dataList[i] in warehouseDict.keys():
+                    newDictionary[dataList[i]] = int(dataList[i + 1])
             dictionaries.append(newDictionary)
         else:
             for dictionary in dictionaries:
                 if dictionary["user"] == user_name:
                     for i in range(1, len(dataList), 2):
-                        if dataList[i] in dictionary:
-                            dictionary[dataList[i]] += int(dataList[i + 1])
-                        else:
-                            dictionary[dataList[i]] = int(dataList[i + 1])
+                        if dataList[i] in warehouseDict.keys():
+                            if dataList[i] in dictionary:
+                                dictionary[dataList[i]] += int(dataList[i + 1])
+                            else:
+                                dictionary[dataList[i]] = int(dataList[i + 1])
 
 
 def sell_products(inputData, warehouseDict):
