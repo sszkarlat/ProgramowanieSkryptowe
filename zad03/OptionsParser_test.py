@@ -1,13 +1,7 @@
 from OptionsParser import OptionsParser
 
 
-def test_run():
-    assert OptionsParser.run(
-        ["FORWARD", "BACKWARD", "LEFT", "RIGHT", "LE", "XYX", "RIGHT"]
-    ) == ["FORWARD", "BACKWARD", "LEFT", "RIGHT", "RIGHT"]
-    assert OptionsParser.run(["LEFT", "LEFT", "LEFT", "XYX", "RIGT", "MIS"]) == [
-        "LEFT",
-        "LEFT",
-        "LEFT",
-    ]
-    assert OptionsParser.run(["XYZ", "MIS", "LEWO", "PRAWO"]) == []
+def test_options_parser():
+    assert OptionsParser.options_parser(["f", "b", "l", "e", "x", "r"]) == [0, 1, 2, 3]
+    assert OptionsParser.options_parser(["l", "l", "l", "x", "ri", "mis"]) == [2, 2, 2]
+    assert OptionsParser.options_parser(["x", "mis", "lew", "prawo"]) == []
