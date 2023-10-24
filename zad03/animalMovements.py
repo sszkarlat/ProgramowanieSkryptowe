@@ -1,5 +1,5 @@
 import sys
-from OptionsParser import OptionsParser
+from controller import OptionsParser
 
 moveDescription = {
     0: "Zwierzak idzie do przodu",

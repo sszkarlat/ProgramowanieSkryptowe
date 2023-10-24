@@ -1,4 +1,4 @@
-from MoveDirection import MoveDirection
+from mode1 import MoveDirection
 
 
 class OptionsParser:

@@ -1,3 +1,13 @@
+from enum import Enum
+
+
+class MoveDirection(Enum):
+    FORWARD = 0
+    BACKWARD = 1
+    LEFT = 2
+    RIGHT = 3
+
+
 class Vector2d:
     def __init__(self, x, y):
         self.__x = x
@@ -20,12 +30,18 @@ class Vector2d:
         return self.__y
 
     def precedes(self, other_Vector2d):
-        if self.__x <= other_Vector2d.get_x and self.__y <= other_Vector2d.get_y:
-            return True
+        return (
+            True
+            if self.__x <= other_Vector2d.get_x and self.__y <= other_Vector2d.get_y
+            else False
+        )
 
     def follows(self, other_Vector2d):
-        if self.__x >= other_Vector2d.get_x and self.__y >= other_Vector2d.get_y:
-            return True
+        return (
+            True
+            if self.__x >= other_Vector2d.get_x and self.__y >= other_Vector2d.get_y
+            else False
+        )
 
     def add(self, other_Vector2d):
         x = self.__x + other_Vector2d.get_x
@@ -59,16 +75,15 @@ class Vector2d:
         return f"({self.__x}, {self.__y})"
 
 
-# vectors = Vector2d(2, 3)
-# vectors2 = Vector2d(2, 3)
-# print(vectors)
-# # print(vectors.__x)
-# # print(vectors.__y)
-# print(vectors.precedes(vectors2))
-# print(vectors.follows(vectors2))
-# print(vectors.add(vectors2))
-# print(vectors.subtract(vectors2))
-# print(vectors.upperRight(vectors2))
-# print(vectors.lowerLeft(vectors2))
-# print(vectors.opposite())
-# print(vectors.__eq__(vectors2))
+# position1 = Vector2d(1, 2)
+# print(position1)  # (1,2)
+# position2 = Vector2d(-2, 1)
+# print(position2)  # (-2,1)
+# print(position1.add(position2))  # (-1,3)
+# print(position1.subtract(position2))  # (3,1)
+# print(position1.lowerLeft(position2))  # (-2,1)
+# print(position1.upperRight(position2))  # (1,2)
+# print(position1.precedes(position2))  # False
+# print(position1.follows(position2))  # True
+# print(position1.opposite())  # (-1,-2)
+# print(position1.__eq__(position2))  # False

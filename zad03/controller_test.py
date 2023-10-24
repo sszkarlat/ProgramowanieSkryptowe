@@ -1,4 +1,4 @@
-from OptionsParser import OptionsParser
+from controller import OptionsParser
 
 
 def test_options_parser():

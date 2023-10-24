@@ -1,4 +1,4 @@
-from Vector2d import Vector2d
+from mode1 import Vector2d
 
 
 def test_get_x():
@@ -15,13 +15,13 @@ def test_precedes():
     vector1 = Vector2d(1, 2)
     vector2 = Vector2d(3, 4)
     assert vector1.precedes(vector2) is True
-    assert vector2.precedes(vector1) is None
+    assert vector2.precedes(vector1) is False
 
 
 def test_follows():
     vector1 = Vector2d(1, 2)
     vector2 = Vector2d(3, 4)
-    assert vector1.follows(vector2) is None
+    assert vector1.follows(vector2) is False
     assert vector2.follows(vector1) is True
 
 
