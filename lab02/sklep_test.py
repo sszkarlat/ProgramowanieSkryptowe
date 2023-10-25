@@ -17,13 +17,11 @@ test_data = [
 
 
 def test_regex_function():
-    """Test regex_function."""
     result = regex_function(test_data[0])
     assert result == ["Jan_Kowalski", "Laptop", "2"]
 
 
 def test_display_warehouse_state(capsys):
-    """Test display_warehouse_state function."""
     test_data = {
         "Komputer": 5,
         "Laptop": 3,
@@ -43,23 +41,20 @@ Laptop: 3
 
 
 def test_sell_products():
-    """Test sell_products function."""
     warehouse = {"Komputer": 5, "Laptop": 3}
     sell_data = [
         "Jan_Kowalski:Komputer(2)",
         "Anna_Dymna:Laptop(3)",
-    ]  # Changed quantity for Jane
+    ]
     sell_products(sell_data, warehouse)
 
-    assert warehouse == {"Komputer": 3, "Laptop": 0}  # Updated expected values
+    assert warehouse == {"Komputer": 3, "Laptop": 0}
 
 
 def test_check_format():
-    """Test check_format function."""
-    # Valid format
+
     assert check_format("Jan_Kowalski:Komputer(5)") is True
     assert check_format("Anna_Dymna:Laptop(3)") is True
 
-    # Invalid format
     assert check_format("Jan:apple(5") is False
     assert check_format("Anna_Dymna:Komputer") is False
