@@ -41,9 +41,15 @@ class Client:
 
     def calculate_total_value(self, product):
         if product == "Komputer":
-            return self.productDict.get("Komputer", 0) * 2000
+            return (
+                self.productDict.get("Komputer", 0)
+                * list_of_products_in_warehouse[0].price
+            )
         elif product == "Laptop":
-            return self.productDict.get("Laptop", 0) * 5000
+            return (
+                self.productDict.get("Laptop", 0)
+                * list_of_products_in_warehouse[1].price
+            )
         return 0
 
     def __str__(self):
@@ -64,6 +70,7 @@ list_of_products_in_warehouse = [
     Product("Komputer", 7, 2000),
     Product("Laptop", 15, 5000),
 ]
+print()
 
 list_of_clients = [Client("Jan Kowalski"), Client("Anna Nowak")]
 
@@ -84,10 +91,13 @@ if __name__ == "__main__":
                 except IndexError:
                     print("Niepoprawna komenda!")
             elif inputDataList[0] == "sell":
-                list_of_clients[int(inputDataList[1])].buy(
-                    list_of_products_in_warehouse[int(inputDataList[2])],
-                    int(inputDataList[3]),
-                )
+                try:
+                    list_of_clients[int(inputDataList[1])].buy(
+                        list_of_products_in_warehouse[int(inputDataList[2])],
+                        int(inputDataList[3]),
+                    )
+                except IndexError:
+                    print("Niepoprawna komenda!")
             else:
                 print("Nieznana komenda!")
     except EOFError:
