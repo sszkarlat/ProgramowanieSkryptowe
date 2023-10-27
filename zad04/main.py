@@ -73,3 +73,6 @@ def test_Animal_move_west(animal: Animal):
     assert animal.isAt(Vector2d(0, 2))
     animal.move(MoveDirection.BACKWARD)
     assert animal.isAt(Vector2d(1, 2))
+
+
+positions: list[Vector2d] = [Vector2d(2, 2), Vector2d(3, 4)]
