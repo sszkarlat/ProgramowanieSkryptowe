@@ -1,4 +1,4 @@
-from typing_extensions import Self
+# from typing_extensions import Self
 from enum import Enum, IntEnum
 
 
@@ -73,7 +73,7 @@ class Vector2d:
         return self.__x == other_Vector2d.get_x and self.__y == other_Vector2d.get_y
 
     def __str__(self):
-        return f"({self.__x}, {self.__y})"
+        return f"({self.__x},{self.__y})"
 
 
 class MapDirection(IntEnum):
@@ -110,5 +110,46 @@ class Animal:
         self.position = position
         self.orientation = orientation
 
+    def isAt(self, position: Vector2d) -> bool:
+        return True if position.__eq__ else False
+
+    def move(self, direction: MoveDirection) -> None:
+        if direction in {MoveDirection.LEFT, MoveDirection.RIGHT}:
+            if direction == MoveDirection.LEFT:
+                self.orientation = self.orientation.previous()
+            else:
+                self.orientation = self.orientation.next()
+        else:
+            new_position = self.position.add(self.orientation.toUnitVector())
+
+            if 0 <= new_position.get_x < 4 and 0 <= new_position.get_y < 4:
+                self.position = new_position
+
+    #     if direction.value == 0:
+    #         if self.orientation.value == 0 and 0 <= self.position.get_y < 4:
+    #             self.position = self.position.add(self.orientation.toUnitVector())
+    #         elif self.orientation.value == 1 and 0 <= self.position.get_x < 4:
+    #             self.position = self.position.add(self.orientation.toUnitVector())
+    #         elif self.orientation.value == 2 and 0 <= self.position.get_y < 4:
+    #             self.position = self.position.add(self.orientation.toUnitVector())
+    #         elif self.orientation.value == 3 and 0 <= self.position.get_x < 4:
+    #             self.position = self.position.add(self.orientation.toUnitVector())
+    #     elif direction.value == 1:
+    #         if self.orientation.value == 0 and 0 <= self.position.get_y < 4:
+    #             self.position = self.position.subtract(self.orientation.toUnitVector())
+    #         elif self.orientation.value == 1 and 0 <= self.position.get_x < 4:
+    #             self.position = self.position.subtract(self.orientation.toUnitVector())
+    #         elif self.orientation.value == 2 and 0 <= self.position.get_y < 4:
+    #             self.position = self.position.subtract(self.orientation.toUnitVector())
+    #         elif self.orientation.value == 3 and 0 <= self.position.get_x < 4:
+    #             self.position = self.position.subtract(self.orientation.toUnitVector())
+    #     elif direction == MoveDirection.LEFT:
+    #         self.orientation = self.orientation.previous()
+    #     elif direction == MoveDirection.RIGHT:
+    #         self.orientation = self.orientation.next()
+
     def __str__(self) -> str:
-        return str(self.position)
+        return f"{self.position} {self.orientation}"
+
+    def __repr__(self) -> str:
+        return str(self)
