@@ -3,17 +3,17 @@ from model import MoveDirection, Vector2d, Animal
 
 class OptionsParser:
     @staticmethod
-    def options_parser(stringList):
+    def parse(stringList):
         resultList = []
         for string in stringList:
             if string == "f":
-                resultList.append(MoveDirection["FORWARD"].value)
+                resultList.append(MoveDirection["FORWARD"])
             elif string == "b":
-                resultList.append(MoveDirection["BACKWARD"].value)
+                resultList.append(MoveDirection["BACKWARD"])
             elif string == "l":
-                resultList.append(MoveDirection["LEFT"].value)
+                resultList.append(MoveDirection["LEFT"])
             elif string == "r":
-                resultList.append(MoveDirection["RIGHT"].value)
+                resultList.append(MoveDirection["RIGHT"])
 
         return resultList
 
@@ -24,12 +24,14 @@ class Simulation:
     ) -> None:
         self.directions = directions
         self.animals = [Animal(position) for position in positions]
-        # self.lenPositions
 
     def run(self) -> None:
-        for i in range(0, len(self.directions), len(self.animals)):
-
-
-    def __str__(self):
         for i in self.animals:
-            print(i)
+            print(f"{i.position}, {i.orientation}")
+        print(self.directions)
+        print(self.animals)
+        for i, direction in enumerate(self.directions):
+            index = i % len(self.animals)
+            # print("direction", direction)
+            self.animals[index].move(direction)
+            print(f"Zwierzę {index} : {self.animals[index]}")
