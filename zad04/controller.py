@@ -28,8 +28,8 @@ class Simulation:
     def run(self) -> None:
         for i in self.animals:
             print(f"{i.position}, {i.orientation}")
-        print(self.directions)
-        print(self.animals)
+        # print(self.directions)
+        # print(self.animals)
         for i, direction in enumerate(self.directions):
             index = i % len(self.animals)
             # print("direction", direction)
