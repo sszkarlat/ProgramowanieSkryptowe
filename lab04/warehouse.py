@@ -20,15 +20,15 @@ Cena: {self.price} zł\n"""
 
 
 class Client:
-    nextId = 1
+    nextId = 1 # Zmienna klasowa - przechowuje wartość id następnego klienta
     def __init__(self, name):
-        self.id = Number.nextId
+        self.id = Client.nextId # Zmienna instancyjna - przypisanie id do konkretnego klienta
         self.surname = name.split(" ")[1]
         self.name = name.split(" ")[0]
         self.amount = 0
         self.productDict = {}
         
-        Number.nextId += 1
+        Client.nextId += 1 # Zwiększenie id (zmiennej klasowej dla kolejnego klienta)
 
     def buy(self, product, amount):
         if amount >= 0:
