@@ -93,11 +93,11 @@ class MapDirection(IntEnum):
     WEST = 3
 
     def next(self) -> "MapDirection":
-        nextValue = (self.value + 1) % 4
+        nextValue = (self.value + 1) % len(MapDirection)
         return MapDirection(nextValue)
 
     def previous(self) -> "MapDirection":
-        previousValue = (self.value - 1) % 4
+        previousValue = (self.value - 1) % len(MapDirection)
         return MapDirection(previousValue)
 
     def toUnitVector(self) -> "Vector2d":
