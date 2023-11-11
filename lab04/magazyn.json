@@ -1,0 +1,24 @@
+{
+    "products": [
+        {
+            "name": "Komputer",
+            "amountOfProduct": 7,
+            "price": 2000
+        },
+        {
+            "name": "Laptop",
+            "amountOfProduct": 15,
+            "price": 5000
+        },
+        {
+            "name": "Telewizor",
+            "amountOfProduct": 20,
+            "price": 1500
+        },
+        {
+            "name": "Smartfon",
+            "amountOfProduct": 5,
+            "price": 800
+        }
+    ]
+}

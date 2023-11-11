@@ -135,28 +135,47 @@ class Animal:
         #     if 0 <= new_position.get_x < 4 and 0 <= new_position.get_y < 4:
         #         self.position = new_position
 
-        if direction.value == 0:
-            if self.orientation.value == 0 and 0 <= self.position.get_y < 4:
-                self.position = self.position.add(self.orientation.toUnitVector())
-            elif self.orientation.value == 1 and 0 <= self.position.get_x < 4:
-                self.position = self.position.add(self.orientation.toUnitVector())
-            elif self.orientation.value == 2 and 0 < self.position.get_y <= 4:
-                self.position = self.position.add(self.orientation.toUnitVector())
-            elif self.orientation.value == 3 and 0 < self.position.get_x <= 4:
-                self.position = self.position.add(self.orientation.toUnitVector())
-        elif direction.value == 1:
-            if self.orientation.value == 0 and 0 < self.position.get_y <= 4:
-                self.position = self.position.subtract(self.orientation.toUnitVector())
-            elif self.orientation.value == 1 and 0 < self.position.get_x <= 4:
-                self.position = self.position.subtract(self.orientation.toUnitVector())
-            elif self.orientation.value == 2 and 0 <= self.position.get_y < 4:
-                self.position = self.position.subtract(self.orientation.toUnitVector())
-            elif self.orientation.value == 3 and 0 <= self.position.get_x < 4:
-                self.position = self.position.subtract(self.orientation.toUnitVector())
+        # if direction.value == 0:
+        #     if self.orientation.value == 0 and 0 <= self.position.get_y < 4:
+        #         self.position = self.position.add(self.orientation.toUnitVector())
+        #     elif self.orientation.value == 1 and 0 <= self.position.get_x < 4:
+        #         self.position = self.position.add(self.orientation.toUnitVector())
+        #     elif self.orientation.value == 2 and 0 < self.position.get_y <= 4:
+        #         self.position = self.position.add(self.orientation.toUnitVector())
+        #     elif self.orientation.value == 3 and 0 < self.position.get_x <= 4:
+        #         self.position = self.position.add(self.orientation.toUnitVector())
+        # elif direction.value == 1:
+        #     if self.orientation.value == 0 and 0 < self.position.get_y <= 4:
+        #         self.position = self.position.subtract(self.orientation.toUnitVector())
+        #     elif self.orientation.value == 1 and 0 < self.position.get_x <= 4:
+        #         self.position = self.position.subtract(self.orientation.toUnitVector())
+        #     elif self.orientation.value == 2 and 0 <= self.position.get_y < 4:
+        #         self.position = self.position.subtract(self.orientation.toUnitVector())
+        #     elif self.orientation.value == 3 and 0 <= self.position.get_x < 4:
+        #         self.position = self.position.subtract(self.orientation.toUnitVector())
+        # elif direction == MoveDirection.LEFT:
+        #     self.orientation = self.orientation.previous()
+        # elif direction == MoveDirection.RIGHT:
+        #     self.orientation = self.orientation.next()
+
+
+        if direction == MoveDirection.RIGHT:
+            self.orientation = self.orientation.next()
+        
         elif direction == MoveDirection.LEFT:
             self.orientation = self.orientation.previous()
-        elif direction == MoveDirection.RIGHT:
-            self.orientation = self.orientation.next()
+        
+        elif (direction == MoveDirection.RIGHT and self.orientation == MapDirection.SOUTH) or (direction == MoveDirection.LEFT and self.orientation == MapDirection.NORTH):
+            self.orientation = MapDirection.WEST
+        
+        if direction == MoveDirection.FORWARD or direction == MoveDirection.BACKWARD:
+            if direction == MoveDirection.FORWARD:
+                target: Vector2d = self.position.add(self.orientation.toUnitVector())
+            else:
+                target = self.position.subtract(self.orientation.toUnitVector())
+
+            if target.follows(Vector2d(0,0)) and target.precedes(Vector2d(4,4)):
+                self.position = target
 
     def __str__(self) -> str:
         return f"{self.position} {self.orientation}"

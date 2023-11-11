@@ -1,3 +1,6 @@
+# import datetime
+import json
+
 class Product:
     def __init__(self, name, amountOfProduct, price):
         self.name = name
@@ -13,10 +16,31 @@ Produkt: {self.name}
 Ilość: {self.amountOfProduct}
 Cena: {self.price} zł\n"""
 
-# class Store:
-#     products: list[Product] = products
-#     def __init__(self, transactions: list[Transaction]):
-#         self.transactions = transactions
+    def to_json(self):
+        return json.dumps(self.__dict__)
+
+    @classmethod
+    def from_json(cls, json_str):
+        data = json.loads(json_str)
+        return cls(**data)
+
+
+class Store:
+    def __init__(self, products=None):
+        self.products = products or []
+
+    def add_product(self, product):
+        self.products.append(product)
+
+    def to_json(self):
+        return json.dumps([product.to_json() for product in self.products])
+
+    @classmethod
+    def from_json(cls, file_path):
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+        products = [Product(**product_data) for product_data in data['products']]
+        return cls(products=products)
 
 
 class Client:
@@ -76,13 +100,16 @@ class Client:
         return f"{self.name}\n{product_info}\nWartość kupionych towarów wynosi {total_value} zł"
 
 
-list_of_products_in_warehouse = [
-    Product("Komputer", 7, 2000),
-    Product("Laptop", 15, 5000),
-]
+# list_of_products_in_warehouse = [
+#     Product("Komputer", 7, 2000),
+#     Product("Laptop", 15, 5000),
+#     Product("Telewizor", 20, 1500),
+#     Product("Smartfon", 5, 800)
+# ]
 print()
 
 list_of_clients = [Client("Jan Kowalski"), Client("Anna Nowak")]
+store = Store()
 
 if __name__ == "__main__":
     try:
@@ -99,13 +126,19 @@ if __name__ == "__main__":
                 try:
                     print(list_of_clients[int(inputDataList[1])])
                 except IndexError:
-                    print("Niepoprawna komenda!")
+                    print(list_of_products_in_warehouse[0], list_of_products_in_warehouse[1])
             elif inputDataList[0] == "sell":
                 try:
                     list_of_clients[int(inputDataList[1])].buy(
                         list_of_products_in_warehouse[int(inputDataList[2])],
                         int(inputDataList[3]),
                     )
+                except IndexError:
+                    print("Niepoprawna komenda!")
+            elif inputDataList[0] == "add":
+                try:
+                    product = Product(inputDataList[1], inputDataList[2], inputDataList[3])
+                    product.to_json()
                 except IndexError:
                     print("Niepoprawna komenda!")
             else:
