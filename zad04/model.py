@@ -9,7 +9,7 @@ class MoveDirection(Enum):
     RIGHT = 3
 
 
-print(MoveDirection.LEFT.value)
+# print(MoveDirection.LEFT.value)
 
 
 class Vector2d:
