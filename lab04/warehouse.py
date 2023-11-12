@@ -1,4 +1,4 @@
-# import datetime
+import datetime
 import json
 
 class Product:
@@ -26,21 +26,56 @@ Cena: {self.price} zł\n"""
 
 
 class Store:
-    def __init__(self, products=None):
-        self.products = products or []
+    products: list[Product] = []
+
+    def __init__(self):
+        self.transactions: list[Transaction] = []
 
     def add_product(self, product):
         self.products.append(product)
 
+    def add_transaction(self, transaction):
+        self.transactions.append(transaction)
+
     def to_json(self):
-        return json.dumps([product.to_json() for product in self.products])
+        return json.dumps({
+            'products': [product.to_json() for product in self.products],
+            'transactions': [transaction.to_json() for transaction in self.transactions]
+        })
 
     @classmethod
     def from_json(cls, file_path):
-        with open(file_path, 'r') as file:
+        with open(file_path) as file:
             data = json.load(file)
-        products = [Product(**product_data) for product_data in data['products']]
-        return cls(products=products)
+
+        transactions = [Transaction(**transaction_data) for transaction_data in data['transactions']]
+
+        store_instance = cls()
+        store_instance.products = products
+        store_instance.transactions = transactions
+
+        return store_instance
+
+class Transaction:
+    def __init__(self, client, product, date):
+        self.client: Client = client
+        self.product: Product = product
+        self.date: datetime.date = date
+
+    def to_json(self):
+        return {
+            'client': self.client.to_json(),
+            'product': self.product.to_json(),
+            'date': str(self.date)
+        }
+
+    @classmethod
+    def from_json(cls, data):
+        client = Client(**data['client'])
+        product = Product(**data['product'])
+        date = date.fromisoformat(data['date'])
+
+        return cls(client=client, product=product, date=date)
 
 
 class Client:
@@ -99,17 +134,8 @@ class Client:
 
         return f"{self.name}\n{product_info}\nWartość kupionych towarów wynosi {total_value} zł"
 
-
-# list_of_products_in_warehouse = [
-#     Product("Komputer", 7, 2000),
-#     Product("Laptop", 15, 5000),
-#     Product("Telewizor", 20, 1500),
-#     Product("Smartfon", 5, 800)
-# ]
-print()
-
 list_of_clients = [Client("Jan Kowalski"), Client("Anna Nowak")]
-store = Store()
+store = Store.from_json('magazyn.json')
 
 if __name__ == "__main__":
     try:
@@ -117,9 +143,11 @@ if __name__ == "__main__":
             inputDataList = input("> ").split(" ")
             if inputDataList[0] == "warehouse":
                 try:
-                    print(list_of_products_in_warehouse[int(inputDataList[1])])
+                    if any(product.name == inputDataList[1] for product in store.products):
+                    print(pr)
                 except IndexError:
-                    print(list_of_products_in_warehouse)
+                    for product in store:
+                        print(product)
             elif inputDataList[0] == "clients":
                 print(list_of_clients)
             elif inputDataList[0] == "show":
@@ -140,7 +168,7 @@ if __name__ == "__main__":
                     product = Product(inputDataList[1], inputDataList[2], inputDataList[3])
                     product.to_json()
                 except IndexError:
-                    print("Niepoprawna komenda!")
+                    print("Należy podać: nazwę produktu, liczba sztuk, cena za sztukę.")
             else:
                 print("Nieznana komenda!")
     except EOFError:

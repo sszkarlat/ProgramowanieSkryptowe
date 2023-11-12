@@ -1,22 +1,9 @@
-# class Number:
-#     nextId = 1
-#     def __init__(self):
-#         self.id = Number.nextId
-#         Number.nextId += 1
-
-#     def __str__(self):
-#         return str(self.id)
-
-# numberList = [Number() for _ in range(10)]
-# for number in numberList:
-#     print(number)
-
-import json
+from datetime import date
 
 class Product:
-    def __init__(self, name, amountOfProduct, price):
+    def __init__(self, name, amount_of_product, price):
         self.name = name
-        self.amountOfProduct = amountOfProduct
+        self.amount_of_product = amount_of_product
         self.price = price
 
     def __repr__(self):
@@ -25,65 +12,123 @@ class Product:
     def __str__(self):
         return f"""
 Produkt: {self.name}
-Ilość: {self.amountOfProduct}
+Ilość: {self.amount_of_product}
 Cena: {self.price} zł\n"""
 
-    def to_json(self):
-        return json.dumps(self.__dict__)
 
-    @classmethod
-    def from_json(cls, json_str):
-        data = json.loads(json_str)
-        return cls(**data)
+class Client:
+    nextClient_id = 0
+
+    def __init__(self, name):
+        self.client_id = Client.nextClient_id
+        Client.nextClient_id += 1
+        self.name = name.split(" ")[0]
+        self.surname = name.split(" ")[1]
+        self.amount = 0
+        self.product_dict = {}
+
+    def buy(self, product, amount):
+        if amount >= 0:
+            if amount <= product.amount_of_product:
+                print(f"Transakcja dla {self.name} {self.surname} na produkt: {product.name} (w ilości: {amount}) zakończona sukcesem.")
+                product.amount_of_product -= amount
+                self.amount += amount
+                if product.name in self.product_dict:
+                    self.product_dict[product.name] += amount
+                else:
+                    self.product_dict[product.name] = amount
+            else:
+                print(f"Transakcja dla {self.name} {self.surname} na produkt: {product.name} (w ilości: {amount}) zakończona niepowodzeniem.")
+                print(
+                    f"Liczba dostępnych sztuk w magazynie to {product.amount_of_product}"
+                )
+        else:
+            print(f"Transakcja dla {self.name} {self.surname} na produkt: {product.name} (w ilości: {amount}) zakończona niepowodzeniem.")
+            print(f"Nie można kupić ujemnej liczby produktu - {product.name}")
+
+    def calculate_total_value(self, products):
+        total_value = sum(
+            self.product_dict.get(product.name, 0) * product.price for product in products
+        )
+        return total_value
+
+    def __repr__(self):
+        return f"{self.client_id}: {self.name} {self.surname}"
+
+    def __str__(self):
+        product_info = "\n".join(
+            [f"Produkt: {name}, Ilość: {amount}" for name, amount in self.product_dict.items()]
+        )
+        return f"{self.name} {self.surname}\n{product_info}\nWartość kupionych towarów wynosi {self.calculate_total_value(Store.products)} zł"
+
+
+class Transaction:
+    def __init__(self, client, product, date):
+        self.client: Client = client
+        self.product: Product = product
+        self.date: datetime.date = date.today()
+
+    def __str__(self):
+        return f"{self.date}\nId: {self.client.client_id} {self.client}\n"
 
 
 class Store:
-    def __init__(self, products=None):
-        self.products = products or []
-
-    def add_product(self, product):
-        self.products.append(product)
-
-    def to_json(self):
-        return json.dumps([product.to_json() for product in self.products])
+    products: list[Product] = [
+        Product("Komputer", 7, 2000),
+        Product("Laptop", 15, 5000),
+        Product("Smartfon", 20, 1500),
+        Product("Tablet", 10, 800),
+    ]
+    transactions: list[Transaction] = []
 
     @classmethod
-    def from_json(cls, file_path):
-        with open(file_path, 'r') as file:
-            data = json.load(file)
-        products = [Product(**product_data) for product_data in data['products']]
-        return cls(products=products)
+    def sell_to_client(cls, client_id, product_id, amount):
+        client = next((transaction.client for transaction in cls.transactions if transaction.client.client_id == client_id), None)
+        if client is None:
+            client_name = input("Podanego klienta nie ma, podaj jego nazwę: ")
+            client = Client(client_name)
+            list_of_clients.append(client)
 
-# Przykład użycia:
+        try:
+            product = cls.products[product_id]
+        except IndexError:
+            print("Niepoprawny numer produktu!")
+            return
 
-# Tworzenie nowego sklepu z danymi wczytanymi z pliku JSON
-# Przykład użycia:
+        client.buy(product, amount)
+        transaction = Transaction(client, product, date.today())
+        if cls.transactions == [] or transaction.date in cls.transactions:
+            cls.transactions.append(transaction)
+        else:
+            cls.transactions.append(transaction)
 
-# Tworzenie nowego sklepu z danymi wczytanymi z pliku JSON
-store = Store.from_json('magazyn.json')
+if __name__ == "__main__":
+    list_of_clients = []
 
-# Sprawdzenie, czy produkt "Laptop" znajduje się w magazynie
-product_name_to_find = "Laptop"
-is_product_in_stock = any(product.name == product_name_to_find for product in store.products)
+    try:
+        while True:
+            inputDataList = input("> ").split(" ")
 
-if is_product_in_stock:
-    print(f"{product_name_to_find} jest dostępny w magazynie.")
-else:
-    print(f"{product_name_to_find} nie jest dostępny w magazynie.")
-
-# Wyświetlanie produktów w sklepie
-# for product in :
-#     print(product.name)
-
-    # def __init__(self, transactions: list[Transaction]):
-    #     self.transactions = transactions
-
-# class Transaction:
-#     def __init__(self, client: Client, product: Product, date: datetime.date):
-#         self.client = client
-#         self.product = product
-#         self.date = date
-
-
-# list_of_products_in_warehouse = 
-print()
+            if inputDataList[0] == "warehouse":
+                try:
+                    print(Store.products[int(inputDataList[1])])
+                except IndexError:
+                    for product in Store.products:
+                        print(product)
+            elif inputDataList[0] == "clients":
+                print(list_of_clients)
+            elif inputDataList[0] == "show":
+                try:
+                    for transaction in Store.transactions:
+                        print(transaction)
+                except IndexError:
+                    print("Niepoprawna komenda!")
+            elif inputDataList[0] == "sell":
+                try:
+                    Store.sell_to_client(int(inputDataList[1]), int(inputDataList[2]), int(inputDataList[3]))
+                except (IndexError, ValueError):
+                    print("Niepoprawna komenda!")
+            else:
+                print("Nieznana komenda!")
+    except EOFError:
+        exit()
