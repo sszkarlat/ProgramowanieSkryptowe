@@ -171,9 +171,22 @@ class Store:
             if amount > 0 and price > 0:
                 new_product = Product(name, amount, price)
                 self.products.append(new_product)
+                self.save_to_json(json_file_path)
                 print(f"Dodano nowy produkt: {new_product}")
             else:
                 print("Nie dodano produktu, bo nie można dodać ujemnej liczby.")
+
+    def save_to_json(self, json_file_path):
+        data = [
+            {
+                "name": product.name,
+                "amount_of_product": product.amount_of_product,
+                "price": product.price
+            }
+            for product in self.products
+        ]
+        with open(json_file_path, 'w') as file:
+            json.dump(data, file, indent=2)
 
 if __name__ == "__main__":
     list_of_clients = []
