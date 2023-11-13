@@ -18,16 +18,17 @@ Cena: {self.price} zł\n"""
 
 
 class Client:
-    nextClient_id = 0
+    next_id = 0
 
     def __init__(self, name):
-        self.client_id = Client.nextClient_id
-        Client.nextClient_id += 1
+        self.id = Client.next_id
         self.name = name.split(" ")[0]
         self.surname = name.split(" ")[1]
         self.amount = 0
         self.products_value = 0
         self.product_dict = {}
+
+        Client.next_id += 1
 
     def buy(self, product, amount) -> bool:
         if amount >= 0:
@@ -67,12 +68,12 @@ class Client:
             ]
         )
         return f"""
-Klient: {self.name} {self.surname} (ID: {self.client_id})
+Klient: {self.name} {self.surname} (ID: {self.id})
 {product_info}
 Wartość zakupów: {self.products_value} zł\n"""
 
     def __repr__(self):
-        return f"{self.client_id}: {self.name} {self.surname}"
+        return f"{self.id}: {self.name} {self.surname}"
 
 
 class Transaction:
@@ -120,7 +121,7 @@ class Store:
                 self.transactions.append(Transaction(client, product, date.today()))
                 print("Transakacja się powiodła.")
                 list_of_clients.append(client)
-                # Client.nextClient_id += 1
+                # Client.next_id += 1
             else:
                 print("Transakacja się nie powiodła.")
                 # Store.remove_last_client
@@ -133,7 +134,7 @@ class Store:
                     self.transactions[client_id - first_number_id] = Transaction(client, product, date.today())
                     print("Transakacja się powiodła.")
                     # list_of_clients.append(client)
-                    # Client.nextClient_id += 1
+                    # Client.next_id += 1
                 else:
                     # Store.remove_last_client
                     print("Transakacja się nie powiodła.")
@@ -143,7 +144,7 @@ class Store:
             #         self.transactions[client_id - first_number_id] = Transaction(client, product, date.today())
             #         print("Transakacja się powiodła.")
                     # list_of_clients.append(client)
-                    # Client.nextClient_id += 1
+                    # Client.next_id += 1
                 # else:
                 #     # Store.remove_last_client
                 #     print("Transakacja się nie powiodła.")
@@ -164,7 +165,7 @@ class Store:
 
 if __name__ == "__main__":
     list_of_clients = []
-    json_file_path = 'magazyn.json'  # Zmień ścieżkę do pliku JSON na właściwą
+    json_file_path = 'magazyn.json'  # Ścieżka do pliku JSON
     store = Store(json_file_path)
 
     try:
@@ -198,17 +199,17 @@ if __name__ == "__main__":
                             print("Id musi iść być liczba naturalną")
                         else:
                             first_number_id = int(inputDataList[1])
-                            Client.nextClient_id = first_number_id
+                            Client.next_id = first_number_id
                             store.sell_to_client(int(inputDataList[1]), int(inputDataList[2]), int(inputDataList[3]))
                     else:
-                        if int(inputDataList[1]) - Client.nextClient_id == 0:
+                        if int(inputDataList[1]) - Client.next_id == 0:
                             store.sell_to_client(int(inputDataList[1]), int(inputDataList[2]), int(inputDataList[3]))
                             # store.sell_to_client(int(inputDataList[1]), int(inputDataList[2]), int(inputDataList[3]))
-                        elif first_number_id <= int(inputDataList[1]) <= Client.nextClient_id - 1:
+                        elif first_number_id <= int(inputDataList[1]) <= Client.next_id - 1:
                             store.sell_to_client(int(inputDataList[1]), int(inputDataList[2]), int(inputDataList[3]))
                         else:
                             print("Id musi iść po kolei.")
-                            print("Kolejne id: ", Client.nextClient_id)
+                            print("Kolejne id: ", Client.next_id)
                         # elif int(inputDataList[1]) in list_of_clients:
                         #     store.sell_to_client(int(inputDataList[1]), int(inputDataList[2]), int(inputDataList[3]))
                         # else:
