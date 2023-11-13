@@ -104,7 +104,7 @@ class Store:
         return products
 
     def sell_to_client(self, client_id, product_id, amount):
-        client = next((transaction.client for transaction in self.transactions if transaction.client.client_id == client_id), None)
+        client = next((transaction.client for transaction in self.transactions if transaction.client.id == client_id), None)
         try:
             product = self.products[product_id]
         except IndexError:
@@ -113,8 +113,13 @@ class Store:
 
         if client is None:
             client_name = input("Podanego klienta nie ma, podaj jego nazwę: ")
-            # client_name = "Jan K"
-            client = Client(client_name)
+            try:
+                int(client_name)
+                print("Nazwa klienta powinna być napisem.")
+                return
+            except:
+                # client_name = "Jan K"
+                client = Client(client_name)
             
             purchased_products = client.buy(product, amount)
             if purchased_products:
@@ -158,14 +163,21 @@ class Store:
         # for transaction in self.transactions:
         #     print("HEHE\n", transaction, "HEHE\n")
 
-    def add_product(self, name, amount, price):
-        new_product = Product(name, amount, price)
-        self.products.append(new_product)
-        print(f"Dodano nowy produkt: {new_product}")
+    def add_product(self, name: str, amount: int, price: int):
+        try:
+            int(name)
+            print("Nazwa produktu musi być napisem.")
+        except:
+            if amount > 0 and price > 0:
+                new_product = Product(name, amount, price)
+                self.products.append(new_product)
+                print(f"Dodano nowy produkt: {new_product}")
+            else:
+                print("Nie dodano produktu, bo nie można dodać ujemnej liczby.")
 
 if __name__ == "__main__":
     list_of_clients = []
-    json_file_path = 'magazyn.json'  # Ścieżka do pliku JSON
+    json_file_path = "magazyn.json"  # Ścieżka do pliku JSON
     store = Store(json_file_path)
 
     try:
@@ -219,13 +231,10 @@ if __name__ == "__main__":
                     print("Niepoprawna komenda!")
 
             elif inputDataList[0] == "add":
-                try:
-                    name = inputDataList[1]
-                    amount = int(inputDataList[2])
-                    price = int(inputDataList[3])
-                    store.add_product(name, amount, price)
-                except (IndexError, ValueError):
-                    print("Niepoprawna komenda!")            
+                name = str(inputDataList[1])
+                amount = int(inputDataList[2])
+                price = int(inputDataList[3])
+                store.add_product(name, amount, price)        
                 
             else:
                 print("Nieznana komenda!")
