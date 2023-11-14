@@ -31,7 +31,7 @@ class Client:
         Client.next_id += 1
 
     def buy(self, product, amount) -> bool:
-        if amount >= 0:
+        if amount > 0:
             if amount <= product.amount_of_product:
                 product.amount_of_product -= amount
                 self.amount += amount
@@ -45,6 +45,9 @@ class Client:
             else:
                 print(f"Liczba dostępnych sztuk w magazynie to {product.amount_of_product}")
                 return False
+        elif amount == 0:
+            print(f"Nie można kupić zerowej liczby produktu - {product.name}")
+            return False
         else:
             print(f"Nie można kupić ujemnej liczby produktu - {product.name}")
             return False
@@ -166,7 +169,7 @@ if __name__ == "__main__":
                     for product in store.products:
                         print(product)
             elif inputDataList[0] == "clients":
-                print(list_of_clients)
+                print("Brak klientów") if not list_of_clients else print(list_of_clients)
             elif inputDataList[0] == "show":
                 try:
                     difference = int(inputDataList[1]) - first_number_id
