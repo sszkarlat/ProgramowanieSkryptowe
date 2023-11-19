@@ -13,6 +13,8 @@ class Base:
     def __str__(self) -> str:
         return f"Cena: {self.price} zł"
 
+
+# Klasa Service dziedziczy z klasy bazowej Base
 class Service(Base):
     def __init__(self, name: str, price: int) -> None:
         super().__init__(name, price)
@@ -23,6 +25,7 @@ Usługa: {self.name}
 """ + super().__str__()
 
 
+# KLasa Product dziedziczy z klasy bazowej Base
 class Product(Base):
     def __init__(self, name, amount_of_product, price):
         self.amount_of_product = amount_of_product
@@ -36,17 +39,17 @@ Ilość: {self.amount_of_product}
 
 
 class Client:
-    next_id = 0
+    # next_id = 0
 
     def __init__(self, name, surname):
-        self.id = Client.next_id
+        # self.id = Client.next_id
         self.name = name
         self.surname = surname
         self.amount = 0
         self.products_value = 0
         self.product_dict = {}
 
-        Client.next_id += 1
+        # Client.next_id += 1
 
     def buy(self, product, amount) -> bool:
         if amount > 0:
@@ -86,7 +89,7 @@ class Client:
             ]
         )
         return f"""
-Klient: {self.name} {self.surname} (ID: {self.id})
+Klient: {self.name} {self.surname}
 {product_info}
 Wartość zakupów: {self.products_value} zł\n"""
 
@@ -104,7 +107,7 @@ class Transaction:
 
 
 class Store:
-    def __init__(self, clients, product_json, service_json):
+    def __init__(self, clients: dict[Client, list[Transaction]], product_json, service_json):
         self.list_of_products, self.list_of_services = self.load_data_from_json(product_json, service_json)
         self.clients = clients
         self.transactions = []
@@ -131,44 +134,46 @@ class Store:
 
 
     def sell_to_client(self, client_name, client_surname, product_id, amount):
-        newClient = Client(client_name, client_surname)
-        
+        found_client = None
         try:
             product = self.list_of_products[product_id]
         except IndexError:
             print("Niepoprawny numer produktu!")
             return
-
-        found_client = None
-        for client in self.clients:
-            if client.__eq__(newClient):
-                found_client = client
+            
+        for existing_client in self.clients:
+            newClient = Client(client_name, client_surname)
+            if existing_client.__eq__(newClient):
+                found_client = existing_client
                 break
 
         if found_client is None:
-            client_name = input("Podanego klienta nie ma, podaj jego nazwę: ")
+            newClient = Client(client_name, client_surname)
             if any(part.isdigit() for part in client_name.split(" ")):
                 print("Nazwa klienta powinna być napisem.")
                 return
-            newClient = Client(client_name[0], client_name[1])
-            
+
             purchased_products = newClient.buy(product, amount)
             if purchased_products:
                 self.transactions.append(Transaction(product, date.today()))
+                self.clients[newClient] = Transaction(product, date.today())
+                list_of_clients.append(newClient)
                 print("Transakacja się powiodła.")
-                self.clients.update(newClient)
             else:
                 print("Transakcja się nie powiodła.")
         else:
             purchased_products = found_client.buy(product, amount)
             if purchased_products:
-                self.clients[client] = (Transaction(product, date.today()))
-                print("Transakacja się powiodła.")
+                self.clients[found_client] = Transaction(product, date.today())
+                print("Transakcja się powiodła.")
             else:
                 print("Transakcja się nie powiodła.")
+
     def __str__(self):
         return f"""
-{self.client} {self.clients}"""
+{self.clients[client]}
+{self.client}"""
+
 
 if __name__ == "__main__":
 
@@ -209,7 +214,13 @@ if __name__ == "__main__":
                 # try:
                     # difference = int(inputDataList[1]) - first_number_id
 
-                    print(store.clients[Client(inputDataList[1], inputDataList[2])])
+                    print(store.clients[Client(inputDataList[1], inputDataList[2])], end="")
+                    # print(client)
+                    for client in store.clients:
+                        if client.__eq__(Client(inputDataList[1], inputDataList[2])):
+                            print(client)
+                    # for i in list_of_clients:
+                    #     print(i)
                     # print(store.)
                 # except:
                 #     print("Niepoprawna komenda!")
