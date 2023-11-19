@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Czyszczenie komputera",
+        "price": 100
+    },
+    {
+        "name": "Zainstalowanie OS",
+        "price": 500
+    },
+    {
+        "name": "Formatowanie dysku",
+        "price": 1000
+    },
+    {
+        "name": "Nałożenie folii ochronnej",
+        "price": 50
+    },
+    {
+        "name": "Portfolio na zamówienie",
+        "price": 5000
+    }
+]
