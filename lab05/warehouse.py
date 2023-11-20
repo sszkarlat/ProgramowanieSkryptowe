@@ -251,8 +251,10 @@ if __name__ == "__main__":
                     print(store.list_of_services)
                     for service in store.list_of_services:
                         print(service)
+                        
             elif inputDataList[0] == "clients":
                 print("Brak klientów") if not list_of_clients else print(list_of_clients)
+
             elif inputDataList[0] == "show":
                 try:
                     for client in store.clients.keys():
@@ -268,6 +270,7 @@ if __name__ == "__main__":
                             print(transaction)
                     else:
                         print("Brak transakcji")
+
             elif inputDataList[0] == "show_details":
                 try:
                     for client in store.clients:
