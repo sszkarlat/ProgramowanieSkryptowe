@@ -51,7 +51,7 @@ class Client:
         self.product_dict = {}
 
 
-    def buy(self, product, amount) -> bool:
+    def buy_product(self, product, amount) -> bool:
         if amount > 0:
             if amount <= product.amount_of_product:
                 product.amount_of_product -= amount
@@ -119,7 +119,7 @@ class Transaction:
         self.date: datetime.date = date.today()
 
     def __str__(self):
-        return f"Data: {self.date} | Produkt: {self.product.name}"
+        return f"Data: {self.date} | Produkt/Usługa: {self.product.name}"
 
 
 
@@ -168,7 +168,7 @@ class Store:
             newClient = Client(client_name, client_surname)
             self.clients[newClient] = []
 
-            purchased_products = newClient.buy(product, amount)
+            purchased_products = newClient.buy_product(product, amount)
             if purchased_products:
                 self.transactions.append((str(Transaction(product, date.today())) + " | Ilość: " + str(amount)))
                 self.clients[newClient].append((str(Transaction(product, date.today())) + " | Ilość: " + str(amount)))
@@ -177,7 +177,7 @@ class Store:
             else:
                 print("Transakcja się nie powiodła.")
         else:
-            purchased_products = found_client.buy(product, amount)
+            purchased_products = found_client.buy_product(product, amount)
             if purchased_products:
                 self.transactions.append((str(Transaction(product, date.today())) + " | Ilość: " + str(amount)))
                 self.clients[newClient].append((str(Transaction(product, date.today())) + " | Ilość: " + str(amount)))
