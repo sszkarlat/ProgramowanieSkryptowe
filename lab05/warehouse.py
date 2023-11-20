@@ -2,6 +2,7 @@ from datetime import date
 import json
 
 
+
 class Base:
     def __init__(self, name: str, price: int) -> None:
         self.name = name
@@ -12,6 +13,7 @@ class Base:
 
     def __str__(self) -> str:
         return f"Cena: {self.price} zł"
+
 
 
 # Klasa Service dziedziczy z klasy bazowej Base
@@ -25,6 +27,7 @@ Usługa: {self.name}
 """ + super().__str__()
 
 
+
 # KLasa Product dziedziczy z klasy bazowej Base
 class Product(Base):
     def __init__(self, name, amount_of_product, price):
@@ -36,6 +39,7 @@ class Product(Base):
 Produkt: {self.name}
 Ilość: {self.amount_of_product}
 """ + super().__str__()
+
 
 
 class Client:
@@ -108,16 +112,15 @@ Wartość zakupów: {self.products_value} zł\n"""
         return f"{self.name} {self.surname}"
 
 
+
 class Transaction:
     def __init__(self, product, date):
         self.product = product
         self.date: datetime.date = date.today()
 
-    def __repr__(self):
-        return f"Data: {self.date} | Produkt: {self.product.name}"
-
     def __str__(self):
         return f"Data: {self.date} | Produkt: {self.product.name}"
+
 
 
 class Store:
@@ -162,12 +165,8 @@ class Store:
                 break
 
         if found_client is None:
-            if any(part.isdigit() for part in client_name.split(" ")):
-                print("Nazwa klienta powinna być napisem.")
-                return
-            else:
-                newClient = Client(client_name, client_surname)
-                self.clients[newClient] = []
+            newClient = Client(client_name, client_surname)
+            self.clients[newClient] = []
 
             purchased_products = newClient.buy(product, amount)
             if purchased_products:
@@ -202,12 +201,8 @@ class Store:
                 break
 
         if found_client is None:
-            if any(part.isdigit() for part in client_name.split(" ")):
-                print("Nazwa klienta powinna być napisem.")
-                return
-            else:
-                newClient = Client(client_name, client_surname)
-                self.clients[newClient] = []
+            newClient = Client(client_name, client_surname)
+            self.clients[newClient] = []
 
             purchased_services = newClient.buy_service(service)
             if purchased_services:
@@ -225,12 +220,6 @@ class Store:
                 print("Transakcja się powiodła.")
             else:
                 print("Transakcja się nie powiodła.")
-
-
-    def __str__(self):
-        return f"""
-{self.clients[client]}
-{self.client}"""
 
 
 if __name__ == "__main__":
