@@ -113,9 +113,11 @@ class Transaction:
         self.product = product
         self.date: datetime.date = date.today()
 
+    def __repr__(self):
+        return f"Data: {self.date} | Produkt: {self.product.name}"
 
     def __str__(self):
-        return f"Data: {self.date}"
+        return f"Data: {self.date} | Produkt: {self.product.name}"
 
 
 class Store:
@@ -160,15 +162,17 @@ class Store:
                 break
 
         if found_client is None:
-            newClient = Client(client_name, client_surname)
             if any(part.isdigit() for part in client_name.split(" ")):
                 print("Nazwa klienta powinna być napisem.")
                 return
+            else:
+                newClient = Client(client_name, client_surname)
+                self.clients[newClient] = []
 
             purchased_products = newClient.buy(product, amount)
             if purchased_products:
-                self.transactions.append(Transaction(product, date.today()))
-                self.clients[newClient] = Transaction(product, date.today())
+                self.transactions.append((str(Transaction(product, date.today())) + " | Ilość: " + str(amount)))
+                self.clients[newClient].append((str(Transaction(product, date.today())) + " | Ilość: " + str(amount)))
                 list_of_clients.append(newClient)
                 print("Transakacja się powiodła.")
             else:
@@ -176,7 +180,8 @@ class Store:
         else:
             purchased_products = found_client.buy(product, amount)
             if purchased_products:
-                self.clients[found_client] = Transaction(product, date.today())
+                self.transactions.append((str(Transaction(product, date.today())) + " | Ilość: " + str(amount)))
+                self.clients[newClient].append((str(Transaction(product, date.today())) + " | Ilość: " + str(amount)))
                 print("Transakcja się powiodła.")
             else:
                 print("Transakcja się nie powiodła.")
@@ -197,15 +202,17 @@ class Store:
                 break
 
         if found_client is None:
-            newClient = Client(client_name, client_surname)
             if any(part.isdigit() for part in client_name.split(" ")):
                 print("Nazwa klienta powinna być napisem.")
                 return
+            else:
+                newClient = Client(client_name, client_surname)
+                self.clients[newClient] = []
 
             purchased_services = newClient.buy_service(service)
             if purchased_services:
                 self.transactions.append(Transaction(service, date.today()))
-                self.clients[newClient] = Transaction(service, date.today())
+                self.clients[newClient].append(Transaction(service, date.today()))
                 list_of_clients.append(newClient)
                 print("Transakacja się powiodła.")
             else:
@@ -213,7 +220,8 @@ class Store:
         else:
             purchased_services = found_client.buy_service(service)
             if purchased_services:
-                self.clients[found_client] = Transaction(service, date.today())
+                self.transactions.append(Transaction(service, date.today()))
+                self.clients[found_client].append(Transaction(service, date.today()))
                 print("Transakcja się powiodła.")
             else:
                 print("Transakcja się nie powiodła.")
@@ -258,7 +266,21 @@ if __name__ == "__main__":
                 print("Brak klientów") if not list_of_clients else print(list_of_clients)
             elif inputDataList[0] == "show":
                 try:
-                    print(store.clients[Client(inputDataList[1], inputDataList[2])], end="")
+                    for client in store.clients.keys():
+                        if client.__eq__(Client(inputDataList[1], inputDataList[2])):
+                            if store.clients[client]:
+                                for transaction in store.clients[client]:
+                                    print(transaction)
+                            else:
+                                print("Brak transakcji")
+                except:
+                    if store.transactions:
+                        for transaction in store.transactions:
+                            print(transaction)
+                    else:
+                        print("Brak transakcji")
+            elif inputDataList[0] == "show_details":
+                try:
                     for client in store.clients:
                         if client.__eq__(Client(inputDataList[1], inputDataList[2])):
                             print(client)
@@ -267,7 +289,7 @@ if __name__ == "__main__":
                         print(clientTransactions)
                     
             elif inputDataList[0] == "sell":
-                print(inputDataList)
+                # print(inputDataList)
                 try:
                     if inputDataList[1] == "product":
                         store.sell_product_to_client(inputDataList[2], inputDataList[3], int(inputDataList[4]), int(inputDataList[5]))
