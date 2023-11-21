@@ -277,8 +277,8 @@ if __name__ == "__main__":
                         if client.__eq__(Client(inputDataList[1], inputDataList[2])):
                             print(client)
                 except:
-                    for clientTransactions in store.clients:
-                        print(clientTransactions)
+                    for client in store.clients:
+                        print(client)
                     
             elif inputDataList[0] == "sell":
                 # print(inputDataList)
