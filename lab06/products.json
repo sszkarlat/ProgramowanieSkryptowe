@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Komputer",
+        "amount_of_product": 7,
+        "price": 2000
+    },
+    {
+        "name": "Laptop",
+        "amount_of_product": 15,
+        "price": 5000
+    },
+    {
+        "name": "Smartfon",
+        "amount_of_product": 11,
+        "price": 1500
+    },
+    {
+        "name": "Tablet",
+        "amount_of_product": 10,
+        "price": 800
+    }
+]
