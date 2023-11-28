@@ -1,16 +1,16 @@
 :root {
     --text-color-initial: red;
-    --text-color-end: cyan;
+    --text-color-final: green;
 }
 
 
-@keyframes text_animation {
+@keyframes animation-text {
     from {
         color: var(--text-color-initial);
     }
 
     to {
-        color: var(--text-color-end);
+        color: var(--text-color-final);
     }
 }
 
@@ -20,7 +20,7 @@
     border-style: solid;
     border-color: black;
     border-width: 2px;
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 13px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;
 }
 
 .same_margin {
@@ -29,7 +29,6 @@
 
 @media screen and (min-width: 500px) {
     aside {
-        /* Specyfikacja wyglądu */
         margin: 10px 25px;
         width: 45%;
         padding: 0px 5px;
@@ -37,46 +36,40 @@
     }
 
     footer {
-        /* Specyfikacja wyglądu */
         margin: 10px 25px;
-        padding: 7px;
+        padding: 5px;
     }
 
     header {
-        /* Specyfikacja wyglądu */
         font-size: large;
         margin: 20px 25px;
-        padding-left: 7px;
+        padding-left: 5px;
         height: min-content;
     }
 
     main {
-        /* Specyfikacja wyglądu */
-        margin: 10px 25px;
+        margin: 25px 25px;
         width: 45%;
         position: static;
     }
 
     nav {
-        /* Specyfikacja wyglądu */
-        margin: 10px 25px;
-        margin-top: 30px;
+        margin: 15px 25px;
         width: fit-content;
         padding: 5px;
     }
 
     li {
-        /* Specyfikacja wyglądu */
-        font-size: larger;
+        font-size: large;
     }
 
     h1 {
-        animation-name: text_animation;
+        animation-name: animation-text;
         animation-timing-function: ease;
-        animation-delay: 2s;
+        animation-delay: 1s;
         animation-iteration-count: infinite;
         animation-duration: 1s;
-        animation-direction: alternate;
+        animation-direction: normal;
     }
 
     h1,
@@ -90,52 +83,46 @@
     }
 }
 
-/* specyfikacja dla ludzi z telefonami, czyli zalozmy max 499px */
+/* Przeglądarka Google Chrome dla telefonów ustawia domyślnie max 499px */
 @media screen and (max-width: 499px) {
     aside {
-        /* Specyfikacja wyglądu */
         margin: 10px 25px;
         padding: 0px 5px;
         font-size: large;
     }
 
     footer {
-        /* Specyfikacja wyglądu */
         margin: 10px 25px;
-        padding: 7px;
+        padding: 5px;
     }
 
     header {
-        /* Specyfikacja wyglądu */
         font-size: large;
         margin: 20px 25px;
         padding-left: 7px;
     }
 
     main {
-        /* Specyfikacja wyglądu */
         margin: 10px 25px;
     }
 
     nav {
-        /* Specyfikacja wyglądu */
         margin: 10px 25px;
         margin-top: 30px;
         padding: 5px;
     }
 
     nav li {
-        /* Specyfikacja wyglądu */
-        font-size: larger;
+        font-size: large;
     }
 
     h1 {
-        animation-name: text_animation;
+        animation-name: animation-text;
         animation-timing-function: ease;
-        animation-delay: 2s;
+        animation-delay: 1s;
         animation-iteration-count: infinite;
         animation-duration: 1s;
-        animation-direction: alternate;
+        animation-direction: normal;
     }
 
     h1,

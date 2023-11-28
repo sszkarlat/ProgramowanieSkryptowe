@@ -26,3 +26,9 @@ INFO:root:2023-11-25 14:25:33.595964: User szymon12 called method buy_product of
 INFO:root:2023-11-25 14:25:33.595964: User szymon12 called method __eq__ of class Client
 INFO:root:2023-11-25 14:25:33.596982: User szymon12 called method __str__ of class Transaction
 INFO:root:2023-11-25 14:25:33.596982: User szymon12 called method __str__ of class Transaction
+INFO:root:2023-11-28 15:38:51.927911: User szymon12 called method __eq__ of class Client
+INFO:root:2023-11-28 15:38:51.927911: User szymon12 called method __eq__ of class Client
+INFO:root:2023-11-28 15:38:51.930026: User szymon12 called method buy_product of class Client
+INFO:root:2023-11-28 15:38:51.930026: User szymon12 called method __eq__ of class Client
+INFO:root:2023-11-28 15:38:51.930026: User szymon12 called method __str__ of class Transaction
+INFO:root:2023-11-28 15:38:51.930026: User szymon12 called method __str__ of class Transaction
