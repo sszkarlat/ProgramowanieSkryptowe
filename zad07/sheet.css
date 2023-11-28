@@ -27,7 +27,7 @@
     margin: 10px 25px;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 700px) {
     aside {
         margin: 10px 25px;
         width: 45%;
@@ -84,7 +84,8 @@
 }
 
 /* Przeglądarka Google Chrome dla telefonów ustawia domyślnie max 499px */
-@media screen and (max-width: 499px) {
+/* Najpier ustawiłem 500px, aby elementy strony na siebie nachodziły, więc postanowiłem zmienić na 700px*/
+@media screen and (max-width: 690px) {
     aside {
         margin: 10px 25px;
         padding: 0px 5px;
