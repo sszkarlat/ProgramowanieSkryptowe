@@ -1,0 +1,56 @@
+<html>
+
+<header>
+    <script>
+        function funkcja_zwrotna() {
+            const value1 = document.forms.MyForm.pole_tekstowe.value;
+            const value2 = document.forms.MyForm.pole_liczbowe.value;
+            console.log(value1, ":", typeof value1);
+            console.log(value2, ":", typeof value2);
+        }
+    </script>
+</header>
+
+<body onLoad="
+            console.log('Tekst 1');
+            window.alert('Tekst 2');
+            /*document.write('Tekst 3');*/
+          ">
+    <script>
+        function load_value() {
+            var load_value = window.prompt();
+            console.log(load_value, ":", typeof load_value);
+        }
+        // window.prompt("Tekst1", "Tekst2");
+        for (let i = 0; i < 4; i++) {
+            // load_value()
+        }
+    </script>
+
+    <form name="MyForm" oninput="wynik.value = pole_tekstowe.value + pole_liczbowe.value">
+        <input id="pole_tekstowe" type="text" placeholder="Wprowadź tekst">
+        +
+        <input id="pole_liczbowe" type="number" placeholder="Wprowadź liczbę">
+        =
+        <output name="wynik" for="pole_tekstowe pole_liczbowe">Tu pojawi się wynik obliczeń</output>
+        <br>
+        <input type="button" value="Wypisz" onclick="funkcja_zwrotna();">
+    </form>
+
+    <div>Treść dokumentu HTML</div>
+    <div>Treść dokumentu HTML</div>
+    <div>Treść dokumentu HTML</div>
+</body>
+
+</html>
+
+<!-- Problem stanowi linia 6 i wywołanie document.write, który nadpisuje zawartość strony -->
+<!-- Składnia window.prompt() 
+message - wiadomość (parametr opcjonalny)
+String wyświetlany użytkownikowi.
+Może być pominięty, jeżeli w oknie nie ma 
+nic do pokazania.
+
+defaultValue - wartość domyślna (parametr opcjonalny)
+String z wartością domyślną, wyświetlany, 
+zanim użytkownik coś wprowadzi.-->
