@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 
 <head>
@@ -98,61 +98,35 @@
             ctx.closePath();
             ctx.fillStyle = "orange";
             ctx.fill();
-        }
-    </script>
-</head>
-
-<body onload="draw()">
-    <main>
-        <h1>Płótno</h1>
-        <canvas id="canvas" width="500" height="500" style="border:1px solid #000000;">
-            Wygląda na to, że twoja przeglądarka nie obsługuje elementu "canvas"
-        </canvas>
-    </main>
-</body>
-
-</html> -->
-
-<!DOCTYPE html>
-<html lang="pl">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Page title</title>
-    <script>
-        function draw() {
-            "use strict";
-            var canvas = document.getElementById('canvas');
-            var ctx = canvas.getContext('2d');
 
             //Rysujemy samochód
             ctx.beginPath();
-            ctx.moveTo(20 + 15, 400 - 150);
-            ctx.lineTo(80 + 15, 320 - 150);
-            ctx.lineTo(306 + 15, 320 - 150);
-            ctx.arc(300 + 15, 360 - 150, 40, 30, 2 * Math.PI);
-            ctx.lineTo(340 + 15, 360 - 150);
-            ctx.lineTo(340 + 15, 400 - 150);
-            ctx.lineTo(426 + 15, 400 - 150);
-            ctx.arc(420 + 15, 440 - 150, 40, 30, 2 * Math.PI);
-            ctx.lineTo(460 + 15, 480 - 150);
-            ctx.lineTo(374 + 15, 480 - 150);
-            ctx.lineTo(136 + 15, 480 - 150);
-            ctx.lineTo(20 + 15, 480 - 150);
-            ctx.lineTo(20 + 15, 400 - 150);
+            ctx.moveTo(20 + 15, 400);
+            ctx.lineTo(80 + 15, 320);
+            ctx.lineTo(306 + 15, 320);
+            ctx.arc(300 + 15, 360, 40, 30, 2 * Math.PI);
+            ctx.lineTo(340 + 15, 360);
+            ctx.lineTo(340 + 15, 400);
+            ctx.lineTo(426 + 15, 400);
+            ctx.arc(420 + 15, 440, 40, 30, 2 * Math.PI);
+            ctx.lineTo(460 + 15, 480);
+            ctx.lineTo(374 + 15, 480);
+            ctx.lineTo(136 + 15, 480);
+            ctx.lineTo(20 + 15, 480);
+            ctx.lineTo(20 + 15, 400);
             ctx.fillStyle = '#F3D723';
             ctx.fill();
             ctx.stroke();
 
             //Rysujemy okna
             ctx.beginPath();
-            ctx.moveTo(80 + 25, 360 - 110);
-            ctx.lineTo(80 + 25, 320 - 120);
-            ctx.lineTo(306 - 25, 320 - 120);
-            ctx.arc(300 - 25, 360 - 120, 40, 30, 2 * Math.PI);
-            ctx.lineTo(340 - 25, 360 - 110);
-            ctx.lineTo(340 - 25, 360 - 110);
-            ctx.lineTo(80 + 25, 360 - 110);
+            ctx.moveTo(80 + 25, 360 + 40);
+            ctx.lineTo(80 + 25, 320 + 30);
+            ctx.lineTo(306 - 25, 320 + 30);
+            ctx.arc(300 - 25, 360 + 30, 40, 30, 2 * Math.PI);
+            ctx.lineTo(340 - 25, 360 + 40);
+            ctx.lineTo(340 - 25, 360 + 40);
+            ctx.lineTo(80 + 25, 360 + 40);
             ctx.fillStyle = '#898888';
             ctx.fill();
             ctx.stroke();
@@ -160,31 +134,31 @@
 
             // Rysujemy koła
             ctx.beginPath();
-            ctx.arc(340 + 15, 460 - 150, 40, 0, 2 * Math.PI);
+            ctx.arc(340 + 15, 460, 40, 0, 2 * Math.PI);
             ctx.fillStyle = 'black';
             ctx.fill();
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.arc(340 + 15, 460 - 150, 10, 0, 2 * Math.PI);
+            ctx.arc(340 + 15, 460, 10, 0, 2 * Math.PI);
             ctx.fillStyle = 'white';
             ctx.fill();
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.arc(100 + 15, 460 - 150, 40, 0, 2 * Math.PI);
+            ctx.arc(100 + 15, 460, 40, 0, 2 * Math.PI);
             ctx.fillStyle = 'black';
             ctx.fill();
             ctx.stroke();
 
             ctx.beginPath();
-            ctx.arc(100 + 15, 460 - 150, 10, 0, 2 * Math.PI);
+            ctx.arc(100 + 15, 460, 10, 0, 2 * Math.PI);
             ctx.fillStyle = 'white';
             ctx.fill();
             ctx.stroke();
         }
-    </script>
 
+    </script>
 </head>
 
 <body onload="draw()">
