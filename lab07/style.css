@@ -1,0 +1,113 @@
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.azure:hover {
+    animation-name: rotation;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-direction: forwards;
+    animation-play-state: running;
+}
+
+.azure {
+    border-style: solid;
+    border-color: #A8A8A8;
+    border-width: 2px;
+    border-radius: 3%;
+    animation-name: rotation;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-direction: forwards;
+    animation-play-state: paused;
+}
+
+h4 {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+main,
+footer {
+    margin-left: 75px;
+    margin-right: 75px;
+}
+
+.flex-container {
+    display: flex;
+}
+
+@media screen and (min-width: 751px) {
+    #flex-container1 {
+        flex-direction: row;
+    }
+
+    #flex-container2 {
+        flex-direction: row-reverse;
+    }
+
+    .form-group {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    #mercedes {
+        margin-right: 20px;
+        width: 50%;
+        height: 70%;
+    }
+
+    #fiat {
+        width: 30%;
+        height: 20%;
+    }
+
+    #przyczepa-z-plandeka {
+        margin-right: 20px;
+        width: 30%;
+        height: 30%;
+    }
+
+    #przyczepa-jednoosiowa {
+        width: 30%;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    #flex-container1 {
+        flex-direction: column;
+    }
+
+    #flex-container2 {
+        flex-direction: column-reverse;
+        justify-content: right;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #przyczepa-z-plandeka {
+        width: 70%;
+        position: relative;
+        left: 30%;
+    }
+
+    #przyczepa-jednoosiowa {
+        width: 50%;
+    }
+}
