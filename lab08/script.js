@@ -21,25 +21,12 @@ function logUserData() {
 
 
 }
-// dataBase.
-
-
 const request = indexedDB.open("dataBase", 1);
 let dataBase;
 
 request.onupgradeneeded = (event) => {
     dataBase = event.target.result;
 
-    // // Usuwanie istniejących tabel
-    // if (dataBase.objectStoreNames.contains("Products")) {
-    //     dataBase.deleteObjectStore("Products");
-    // }
-
-    // if (dataBase.objectStoreNames.contains("Customers")) {
-    //     dataBase.deleteObjectStore("Customers");
-    // }
-
-    // Tworzenie nowych tabel
     const productsObjectStore = dataBase.createObjectStore("Products", { keyPath: "id", autoIncrement: true });
     productsObjectStore.createIndex("name", "name", { unique: false });
     productsObjectStore.createIndex("quantity", "quantity", { unique: false });
@@ -52,8 +39,6 @@ request.onupgradeneeded = (event) => {
 
 request.onsuccess = (event) => {
     dataBase = event.target.result;
-
-
 
     // Inicjalizacja danych produktów
     const productsTransaction = dataBase.transaction("Products", "readwrite");
@@ -131,7 +116,11 @@ function sellProduct(commandParts) {
     const getProductRequest = productsObjectStore.index("name").get(productName);
     const getCustomerRequest = customersObjectStore.index("lastName").get(customerLastName);
 
-
+    transaction.oncomplete = () => {
+        console.group("Sprzedaż");
+        console.log(`Sprzedano ${quantityToSell} sztuk produktu "${productName}" klientowi "${customerFirstName} ${customerLastName}"`);
+        console.groupEnd();
+    };
 
     getProductRequest.onsuccess = (event) => {
         const product = event.target.result;
@@ -160,7 +149,7 @@ function sellProduct(commandParts) {
                         console.error("Błąd podczas aktualizacji historii zakupów klienta:", error);
                     };
                 } else {
-                    console.error(`Nie znaleziono klienta: "${customerFirstName}" "${customerLastName}"`);
+                    console.error(`Nie znaleziono klienta o nazwisku "${customerLastName}"`);
                 }
             };
         } else {
@@ -200,15 +189,13 @@ function displayCustomers() {
 }
 
 function displayPurchaseHistory(commandParts) {
-    const customerLastName = commandParts[2];
-    const customerFirstName = commandParts[1];
+    const customerLastName = commandParts[1];
 
     const transaction = dataBase.transaction(["Products", "Customers"], "readonly");
     const productsObjectStore = transaction.objectStore("Products");
     const customersObjectStore = transaction.objectStore("Customers");
 
     const getCustomerRequest = customersObjectStore.index("lastName").get(customerLastName);
-    const getCustomerRequest1 = customerFirstName.index("firstName").get(customerFirstName);
 
     getCustomerRequest.onsuccess = (event) => {
         const customer = event.target.result;
