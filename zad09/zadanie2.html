@@ -1,0 +1,244 @@
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tytuł strony</title>
+</head>
+
+<body>
+    <header class="azure">
+
+        <h1>Tytuł strony</h1>
+    </header>
+
+    <aside class="azure">
+        <h1>Panel boczny</h1>
+        <h2>Ciekawe odsyłacze</h2>
+        <ul>
+            <li>
+                <a href="">Odsyłacz 1</a>
+            </li>
+            <li>
+                <a href="">Odsyłacz 2</a>
+            </li>
+            <li>
+                <a href="">Odsyłacz 3</a>
+            </li>
+        </ul>
+    </aside>
+
+    <nav class="azure">
+        <ul>
+            <li>
+                <a href="">Element 1</a>
+            </li>
+
+            <li>
+                <a href="">Element 2</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="azure" id="panTadeusz">
+        <h1>Treść strony</h1>
+    </main>
+
+    <form onsubmit="event.preventDefault();" class="azure">
+        <button id="set">SET</button>
+        <button id="delete">DELETE</button>
+        <button id="add">ADD</button>
+    </form>
+
+    <script>
+        var set = document.getElementById("set");
+        var del = document.getElementById("delete");
+        var add = document.getElementById("add");
+
+        function colors() {
+            let azureClass = document.querySelectorAll(".azure");
+            azureClass.forEach(elem => {
+                elem.style.backgroundColor = "azure";
+                elem.style.borderStyle = "solid";
+                elem.style.borderWidth = "2px";
+                elem.style.borderColor = "black";
+                elem.style.boxShadow = "rgba(0, 0, 0, 0.5) 0px 0px 10px";
+                elem.style.margin = "10px 25px";
+            });
+
+            let margin = document.querySelectorAll(".same_margin");
+            margin.forEach(elem => {
+                elem.style.margin = "10px 25px";
+            });
+
+            let aside = document.getElementsByTagName("aside");
+            for (var i = 0; i < aside.length; i++) {
+                aside[i].style.margin = "10px 25px";
+                aside[i].style.width = "45%";
+                aside[i].style.padding = "0px 5px";
+                aside[i].style.float = "right";
+                aside[i].style.fontSize = "30px";
+            }
+
+            let footer = document.getElementsByTagName("footer");
+            for (var i = 0; i < footer.length; i++) {
+                footer[i].style.margin = "10px 25px";
+                footer[i].style.padding = "5px";
+            }
+
+            let header = document.getElementsByTagName("header");
+            for (var i = 0; i < header.length; i++) {
+                header[i].style.fontSize = "large";
+                header[i].style.margin = "20px 25px";
+                header[i].style.paddingLeft = "5px";
+                header[i].style.height = "min-content";
+            }
+
+            let main = document.getElementsByTagName("main");
+            for (var i = 0; i < main.length; i++) {
+                main[i].style.margin = "25px 25px";
+                main[i].style.width = "45%";
+                main[i].style.position = "static";
+            }
+
+            let nav = document.getElementsByTagName("nav");
+            for (var i = 0; i < nav.length; i++) {
+                nav[i].style.margin = "15px 25px";
+                nav[i].style.width = "fit-content";
+                nav[i].style.padding = "5px";
+            }
+
+            let li = document.getElementsByTagName("li");
+            for (var i = 0; i < li.length; i++) {
+                li[i].style.fontSize = "large";
+            }
+
+            let h1 = document.getElementsByTagName("h1");
+            for (var i = 0; i < h1.length; i++) {
+                h1[i].style.margin = "5px";
+                h1[i].style.fontSize = "30px";
+            }
+
+            let h2 = document.getElementsByTagName("h2");
+            for (var i = 0; i < h2.length; i++) {
+                h2[i].style.margin = "5px";
+                h2[i].style.fontSize = "30px";
+            }
+        }
+
+        function deleteStyle() {
+            let azureClass = document.querySelectorAll(".azure");
+            azureClass.forEach(elem => {
+                elem.style.backgroundColor = "";
+                elem.style.borderStyle = "";
+                elem.style.borderWidth = "";
+                elem.style.borderColor = "";
+                elem.style.boxShadow = "";
+                elem.style.margin = "";
+            });
+
+            let margin = document.querySelectorAll(".same_margin");
+            margin.forEach(elem => {
+                elem.style.margin = "";
+            });
+
+            let aside = document.getElementsByTagName("aside");
+            for (var i = 0; i < aside.length; i++) {
+                aside[i].style.margin = "";
+                aside[i].style.width = "";
+                aside[i].style.padding = "";
+                aside[i].style.float = "";
+                aside[i].style.fontSize = "";
+            }
+
+            let footer = document.getElementsByTagName("footer");
+            for (var i = 0; i < footer.length; i++) {
+                footer[i].style.margin = "";
+                footer[i].style.padding = "x";
+            }
+
+            let header = document.getElementsByTagName("header");
+            for (var i = 0; i < header.length; i++) {
+                header[i].style.fontSize = "";
+                header[i].style.margin = "";
+                header[i].style.paddingLeft = "";
+                header[i].style.height = "";
+            }
+
+            let main = document.getElementsByTagName("main");
+            for (var i = 0; i < main.length; i++) {
+                main[i].style.margin = "";
+                main[i].style.width = "";
+                main[i].style.position = "";
+            }
+
+            let nav = document.getElementsByTagName("nav");
+            for (var i = 0; i < nav.length; i++) {
+                nav[i].style.margin = "";
+                nav[i].style.width = "";
+                nav[i].style.padding = "";
+            }
+
+            let li = document.getElementsByTagName("li");
+            for (var i = 0; i < li.length; i++) {
+                li[i].style.fontSize = "";
+            }
+
+            let h1 = document.getElementsByTagName("h1");
+            for (var i = 0; i < h1.length; i++) {
+                h1[i].style.margin = "";
+                h1[i].style.fontSize = "";
+            }
+
+            let h2 = document.getElementsByTagName("h2");
+            for (var i = 0; i < h2.length; i++) {
+                h2[i].style.margin = "";
+                h2[i].style.fontSize = "";
+            }
+        }
+
+        let counter = 0;
+        text = ['Natenczas Wojski chwycił na taśmie przypięty',
+            'Swój róg bawoli, długi, cętkowany, kręty',
+            'Jak wąż boa, oburącz do ust go przycisnął,',
+            'Wzdął policzki jak banię, w oczach krwią zabłysnął,',
+            'Zasunął wpół powieki, wciągnął w głąb pół brzucha',
+            'I do płuc wysłał z niego cały zapas ducha,',
+            'I zagrał: róg jak wicher, wirowatym dechem',
+            'Niesie w puszczę muzykę i podwaja echem.',
+            'Umilkli strzelcy, stali szczwacze zadziwieni',
+            'Mocą, czystością, dziwną harmoniją pieni.',
+            'Starzec cały kunszt, którym niegdyś w lasach słynął,',
+            'Jeszcze raz przed uszami myśliwców rozwinął;',
+            'Napełnił wnet, ożywił knieje i dąbrowy,',
+            'Jakby psiarnię w nie wpuścił i rozpoczął łowy.',
+            'Bo w graniu była łowów historyja krótka:',
+            'Zrazu odzew dźwięczący, rześki: to pobudka;',
+            'Potem jęki po jękach skomlą: to psów granie;',
+            'A gdzieniegdzie ton twardszy jak grzmot: to strzelanie.'];
+
+        function addStyle() {
+            if (counter == text.length) {
+                add.disabled = true;
+            }
+            else {
+                const panTadeusz = document.getElementById('panTadeusz');
+                const p = document.createElement("p");
+                const newText = document.createTextNode(text[counter]);
+                p.appendChild(newText);
+                panTadeusz.appendChild(p);
+                counter += 1;
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function (event) {
+            set.addEventListener('click', colors);
+            del.addEventListener('click', deleteStyle);
+            add.addEventListener('click', addStyle);
+        });
+    </script>
+
+    <footer class="azure">
+        <a href="mailto:your.email.address">Imię Nazwisko</a>
+    </footer>
+</body>
+
+</html>
