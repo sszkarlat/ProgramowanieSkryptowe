@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Zmień wartość "lang" z 'en' na 'pl' -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css" media="screen" type="text/css">
+
+
+    <script>
+        function draw() {
+            "use strict";
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+
+            //Rysujemy samochód
+            ctx.beginPath();
+            ctx.moveTo(2 + 1.5, 40 - 15);
+            ctx.lineTo(8 + 1.5, 32 - 15);
+            ctx.lineTo(30.6 + 1.5, 32 - 15);
+            ctx.arc(30 + 1.5, 36 - 15, 4, 30, 2 * Math.PI);
+            ctx.lineTo(34 + 1.5, 36 - 15);
+            ctx.lineTo(34 + 1.5, 40 - 15);
+            ctx.lineTo(42 + 1.5, 40 - 15);
+            ctx.arc(42 + 1.5, 44 - 15, 4, 30, 2 * Math.PI);
+            ctx.lineTo(46 + 1.5, 48 - 15);
+            ctx.lineTo(37.4 + 1.5, 48 - 15);
+            ctx.lineTo(13.6 + 1.5, 48 - 15);
+            ctx.lineTo(2 + 1.5, 48 - 15);
+            ctx.lineTo(2 + 1.5, 40 - 15);
+            ctx.fillStyle = '#F3D723';
+            ctx.fill();
+            ctx.stroke();
+
+            //Rysujemy okna
+            ctx.beginPath();
+            ctx.moveTo(8 + 2.5, 36 - 11);
+            ctx.lineTo(8 + 2.5, 32 - 12);
+            ctx.lineTo(30.6 - 2.5, 32 - 12);
+            ctx.arc(30 - 2.5, 36 - 12, 4, 30, 2 * Math.PI);
+            ctx.lineTo(34 - 2.5, 36 - 11);
+            ctx.lineTo(34 - 2.5, 36 - 11);
+            ctx.lineTo(8 + 2.5, 36 - 11);
+            ctx.fillStyle = '#898888';
+            ctx.fill();
+            ctx.stroke();
+
+
+            // Rysujemy koła
+            ctx.beginPath();
+            ctx.arc(34 + 1.5, 46 - 15, 4, 0, 2 * Math.PI);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(34 + 1.5, 46 - 15, 1, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(10 + 1.5, 46 - 15, 4, 0, 2 * Math.PI);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.arc(10 + 1.5, 46 - 15, 1, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.stroke();
+        }
+    </script>
+    <script src="script.js"></script>
+
+    <title>
+        Sklep samochodowy
+    </title>
+</head>
+
+<body onload="draw()">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <nav class="navbar navbar-expand-lg" style="background-color: #FFC107;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <canvas id="canvas" width="50" height="50">
+                    Wygląda na to, że twoja przeglądarka nie obsługuje elementu "canvas"
+                </canvas>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <div class="dropdown">
+                        <a class="btn btn-warning dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Pojazdy
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Samochody</a></li>
+                            <li><a class="dropdown-item" href="#">Przyczepy</a></li>
+                        </ul>
+                    </div>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Szukaj" aria-label="Search">
+                    <button class="btn btn-warning" type="submit">Szukaj</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="flex-container" id="flex-container1">
+            <div class="azure" id="mercedes">
+                <img src="pictures/amg-gt.jpg" alt="Tu jest mercedes" width="100%"
+                    style="border-top-left-radius: 2%; border-top-right-radius: 2%;">
+                <div class="content">
+                    <h4>Mercedes AMG-GT</h4>
+                    <ul>
+                        <li>Silnik V8 o pojemności 4 litrów</li>
+                        <li>Moc nawet do 500 KM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="azure" id="fiat">
+                <img src="pictures/fiat500.jpg" alt="Tu jest fiat" width="100%"
+                    style="border-top-left-radius: 2%; border-top-right-radius: 2%;">
+                <div class="content">
+                    <h4>Fiat 500</h4>
+                    <ul>
+                        <li>Silnik elektryczny</li>
+                        <li>Zasięg 400km</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="flex-container" id="flex-container2">
+            <div class="azure" id="przyczepa-jednoosiowa">
+                <img class="right-align" src="pictures/przyczepa-jednoosiowa.jpg" alt="przyczepa jednoosiowa"
+                    width="100%" style="border-top-left-radius: 10%; border-top-right-radius: 10%;">
+                <div class="content">
+                    <h4>PRZYCZEPA SAMOCHODOWA JEDNOOSIOWA UNITRAILER</h4>
+                </div>
+            </div>
+            <div class="azure" id="przyczepa-z-plandeka">
+                <img src="pictures/przyczepa-z-plandeka.jpg" alt="przyczepa1" width="100%"
+                    style="padding-left: 20px; padding-right: 20px;">
+                <div class="content">
+                    <h4>PRZYCZEPA SAMOCHODOWA Z PLANDEKĄ</h4>
+                </div>
+            </div>
+
+        </div>
+        <form id="storeForm">
+            <label for="commandLine">Linia komend:</label>
+            <input type="text" id="commandLine" name="commandLine">
+            <button type="button" onclick="executeCommand()">Wykonaj</button>
+        </form>
+
+        <div class="text-white" style="background-color: green;">&copy;Szablony CyberAGH</div>
+    </main>
+
+</body>
+
+</html>
