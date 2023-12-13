@@ -21,6 +21,8 @@ function logUserData() {
 
 
 }
+
+// Bardzo dobre do przeczytania: https://web.dev/articles/indexeddb?hl=pl
 const request = indexedDB.open("dataBase", 1);
 let dataBase;
 
@@ -43,37 +45,37 @@ request.onsuccess = (event) => {
     const productsTransaction = dataBase.transaction("Products", "readwrite");
     const productsObjectStore = productsTransaction.objectStore("Products");
 
-    const productsData = [
-        { name: "BMW", quantity: 10, price: 800000 },
-        { name: "Fiat", quantity: 25, price: 50000 },
-        { name: "Mercedes", quantity: 15, price: 1000000 },
-        { name: "Volvo", quantity: 8, price: 400000 }
-    ];
+    //     const productsData = [
+    //         { name: "BMW", quantity: 10, price: 800000 },
+    //         { name: "Fiat", quantity: 25, price: 50000 },
+    //         { name: "Mercedes", quantity: 15, price: 1000000 },
+    //         { name: "Volvo", quantity: 8, price: 400000 }
+    //     ];
 
-    productsData.forEach((product) => {
-        productsObjectStore.add(product);
-    });
+    //     productsData.forEach((product) => {
+    //         productsObjectStore.add(product);
+    //     });
 
-    productsTransaction.oncomplete = () => {
-        console.log("Zainicjalizowano dane produktów.");
-    };
+    //     productsTransaction.oncomplete = () => {
+    //         console.log("Zainicjalizowano dane produktów.");
+    //     };
 
     const customersTransaction = dataBase.transaction("Customers", "readwrite");
     const customersObjectStore = customersTransaction.objectStore("Customers");
 
-    const customersData = [
-        { firstName: "Jan", lastName: "Kowalski" },
-        { firstName: "Adam", lastName: "Nowak" },
-        { firstName: "Monika", lastName: "Miss" }
-    ];
+    //     const customersData = [
+    //         { firstName: "Jan", lastName: "Kowalski" },
+    //         { firstName: "Adam", lastName: "Nowak" },
+    //         { firstName: "Monika", lastName: "Miss" }
+    //     ];
 
-    customersData.forEach((customer) => {
-        customersObjectStore.add(customer);
-    });
+    //     customersData.forEach((customer) => {
+    //         customersObjectStore.add(customer);
+    //     });
 
-    customersTransaction.oncomplete = () => {
-        console.log("Zainicjalizowano dane klientów.");
-    };
+    //     customersTransaction.oncomplete = () => {
+    //         console.log("Zainicjalizowano dane klientów.");
+    //     };
 };
 
 function executeCommand() {
@@ -97,7 +99,8 @@ function executeCommand() {
             }
             break;
         default:
-            console.warn("Nieznana operacja:", operation);
+            // console.warn("Nieznana operacja:", operation);
+            window.alert("Nieznana operacja:", operation);
     }
 }
 
@@ -130,7 +133,8 @@ function sellProduct(commandParts) {
                 const updateProductRequest = productsObjectStore.put(product);
 
                 updateProductRequest.onerror = (error) => {
-                    console.error("Błąd podczas aktualizacji ilości produktu:", error);
+                    // console.error("Błąd podczas aktualizacji ilości produktu:", error);
+                    window.alert("Błąd podczas aktualizacji ilości produktu:", error);
                 };
 
                 getCustomerRequest.onsuccess = (event) => {
@@ -144,26 +148,32 @@ function sellProduct(commandParts) {
                         const updateCustomerRequest = customersObjectStore.put(customer);
 
                         updateCustomerRequest.onerror = (error) => {
-                            console.error("Błąd podczas aktualizacji historii zakupów klienta:", error);
+                            // console.error("Błąd podczas aktualizacji historii zakupów klienta:", error);
+                            window.alert("Błąd podczas aktualizacji historii zakupów klienta:", error);
                         };
                     } else {
-                        console.error(`Nie znaleziono klienta o nazwisku "${customerLastName}"`);
+                        // console.error(`Nie znaleziono klienta o nazwisku "${customerLastName}"`);
+                        window.alert(`Nie znaleziono klienta o nazwisku "${customerLastName}"`);
                     }
                 };
             } else {
-                console.warn(`Produkt "${productName}" niedostępny lub brak wystarczającej ilości w magazynie.`);
+                // console.warn(`Produkt "${productName}" niedostępny lub brak wystarczającej ilości w magazynie.`);
+                window.alert(`Produkt "${productName}" niedostępny lub brak wystarczającej ilości w magazynie.`);
             }
         } else {
-            console.warn("Nie wolno kupować ujemnej ilości sztuk.");
+            // console.warn("Nie wolno kupować ujemnej ilości sztuk.");
+            window.alert("Nie wolno kupować ujemnej ilości sztuk.");
         }
     };
 
     getProductRequest.onerror = (error) => {
-        console.error("Błąd podczas pobierania danych produktu:", error);
+        // console.error("Błąd podczas pobierania danych produktu:", error);
+        window.alert("Błąd podczas pobierania danych produktu:", error);
     };
 
     getCustomerRequest.onerror = (error) => {
-        console.error("Błąd podczas pobierania danych klienta:", error);
+        // console.error("Błąd podczas pobierania danych klienta:", error);
+        window.alert("Błąd podczas pobierania danych klienta:", error);
     };
 }
 
@@ -185,7 +195,8 @@ function displayCustomers() {
     };
 
     getAllCustomersRequest.onerror = (error) => {
-        console.error("Błąd podczas pobierania listy klientów:", error);
+        // console.error("Błąd podczas pobierania listy klientów:", error);
+        window.alert("Błąd podczas pobierania listy klientów:", error);
     };
 }
 
@@ -218,12 +229,14 @@ function displayPurchaseHistory(commandParts) {
             console.log(`Sumaryczna cena zakupów: ${totalCost}`);
             console.groupEnd();
         } else {
-            console.error(`Nie znaleziono klienta o nazwisku "${customerLastName}"`);
+            // console.error(`Nie znaleziono klienta o nazwisku "${customerLastName}"`);
+            window.alert(`Nie znaleziono klienta o nazwisku "${customerLastName}"`);
         }
     };
 
     getCustomerRequest.onerror = (error) => {
-        console.error("Błąd podczas pobierania danych klienta:", error);
+        // console.error("Błąd podczas pobierania danych klienta:", error);
+        window.alert("Błąd podczas pobierania danych klienta:", error);
     };
 }
 
@@ -245,6 +258,7 @@ function displayInventory() {
     };
 
     getAllProductsRequest.onerror = (error) => {
-        console.error("Błąd podczas pobierania stanu magazynu:", error);
+        // console.error("Błąd podczas pobierania stanu magazynu:", error);
+        window.alert("Błąd podczas pobierania stanu magazynu:", error);
     };
 }
