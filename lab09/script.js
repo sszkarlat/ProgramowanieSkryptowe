@@ -71,11 +71,13 @@ request.onsuccess = (event) => {
     const productsTransaction = dataBase.transaction("Products", "readwrite");
     const productsObjectStore = productsTransaction.objectStore("Products");
 
+    console.log(productsTransaction)
+
     const getAllProducts = productsObjectStore.getAll();
 
     getAllProducts.onsuccess = () => {
         const productsData = getAllProducts.result;
-        console.log("Dane produktów:", productsData);
+        // console.log("Dane produktów:", productsData);
     };
 };
 
@@ -83,31 +85,55 @@ request.onerror = (event) => {
     console.error("Błąd otwierania bazy danych:", event.target.errorCode);
 };
 
-function executeCommand() {
-    var commandLine = document.getElementById("commandLine").value;
-    console.log("Komenda:", commandLine);
+// document.addEventListener("DOMContentLoaded", function () {
+//     // Add the event listener inside the DOMContentLoaded callback
+//     document.querySelector("#productImage").addEventListener("click", showProductQuantity);
+// });
 
-    var commandParts = commandLine.split(" ");
-    var operation = commandParts[0].toLowerCase();
+document.querySelector("#counter").addEventListener("click", showProductQuantity);
 
-    switch (operation) {
-        case "sell":
-            sellProduct(commandParts);
-            break;
-        case "show":
-            if (commandParts[1] === "clients") {
-                displayCustomers();
-            } else if (commandParts[1] === "warehouse") {
-                displayInventory();
+function showProductQuantity() {
+    const productName = "Mercedes"; // Zakładam, że produkt o nazwie Mercedes jest powiązany z licznikiem
+
+    const transaction = dataBase.transaction("Products", "readwrite");
+    const productsObjectStore = transaction.objectStore("Products");
+
+    const getProductRequest = productsObjectStore.index("name").get(productName);
+
+    getProductRequest.onsuccess = (event) => {
+        const product = event.target.result;
+
+        if (product) {
+            if (product.quantity > 0) {
+                product.quantity -= 1;
+
+                const updateProductRequest = productsObjectStore.put(product);
+
+                updateProductRequest.onsuccess = () => {
+                    // Tutaj zaktualizuj to, co ma się wyświetlić na stronie w elemencie o id "counter"
+                    const counterElement = document.querySelector("#counter");
+                    if (counterElement) {
+                        counterElement.textContent = `Liczba sztuk: ${product.quantity}`;
+                    }
+                };
+
+                updateProductRequest.onerror = (error) => {
+                    window.alert("Błąd podczas aktualizacji ilości produktu:", error);
+                };
             } else {
-                displayPurchaseHistory(commandParts);
+                window.alert(`Produkt: ${productName} chwilowo niedostępny.`);
             }
-            break;
-        default:
-            // console.warn("Nieznana operacja:", operation);
-            window.alert("Nieznana operacja:", operation);
-    }
+        } else {
+            window.alert(`Product ${productName} not found in the warehouse.`);
+        }
+    };
+
+    getProductRequest.onerror = (error) => {
+        window.alert("Error getting product information:", error);
+    };
 }
+
+
 
 function sellProduct(commandParts) {
     const customerFirstName = commandParts[1];
