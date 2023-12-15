@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React</title>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        const Names = props => {
+            const names = ["Kevin", "Oscar", "Simon"]
+            const namesList = names.map(name => <li key={name}>{name}</li>)
+            // const showNames = true
+            // const toggleNames = () => setShowNameState(!showNameState)
+
+
+            return (
+                <div>
+                    {props.test ? <ul>{namesList}</ul> : "Brak imion"}
+                </div>
+            )
+
+        }
+
+        class Headline extends React.Component {
+            state = {
+                title: "ReactJS",
+                showNames: true
+            }
+
+            toggleNames() {
+                this.setState({ showNames: !this.state.showNames })
+            }
+
+            render() { // JSX
+                const changeTitle = () => {
+                    console.log("changing the title...")
+                    this.setState({ title: "Vue" })
+                }
+
+
+
+                // let title = "ReactJS"
+
+                return (<div>
+                    <h1>Hello {this.state.title}</h1>
+                    <Names test={this.state.showNames} />
+                    <button onClick={changeTitle}>Change Title</button>
+                    <button onClick={this.toggleNames.bind(this)}>Toggle names</button>
+
+                </div>)
+            }
+        }
+
+        ReactDOM.render(<Headline />, document.querySelector("#app"));
+    </script>
+</body>
+
+</html>
