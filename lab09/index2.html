@@ -1,3 +1,55 @@
+<!-- class Headline extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            iloscMercedesow: 0,
+        };
+    }
+
+    componentDidMount() {
+        this.fetchIloscMercedesowFromDatabase();
+    }
+
+    fetchIloscMercedesowFromDatabase() {
+        const transaction = dataBase.transaction("Products", "readonly");
+        const productsObjectStore = transaction.objectStore("Products");
+
+        const getMercedesQuantityRequest = productsObjectStore.index("name").get("Mercedes");
+
+        getMercedesQuantityRequest.onsuccess = (event) => {
+            const mercedesProduct = event.target.result;
+
+            if (mercedesProduct) {
+                this.setState({ iloscMercedesow: mercedesProduct.quantity });
+            } else {
+                console.warn("Nie znaleziono produktu Mercedes w bazie danych.");
+            }
+        };
+
+        getMercedesQuantityRequest.onerror = (error) => {
+            console.error("Błąd podczas pobierania ilości Mercedesów z bazy danych:", error);
+        };
+    }
+
+    handleBuyClick = () => {
+        // Upewnij się, że nie możemy schodzić poniżej zera
+        if (this.state.iloscMercedesow > 0) {
+            this.setState((prevState) => ({ iloscMercedesow: prevState.iloscMercedesow - 1 }));
+        }
+    };
+
+    render() {
+        return (
+            <div>
+                <h1>Ilość Mercedesów: {this.state.iloscMercedesow}</h1>
+                <button onClick={this.handleBuyClick}>Kup</button>
+            </div>
+        );
+    }
+}
+
+ReactDOM.createRoot(document.querySelector("#ilosc-mercedes")).render(<Headline />); -->
+
 <!DOCTYPE html>
 <html lang="en">
 
