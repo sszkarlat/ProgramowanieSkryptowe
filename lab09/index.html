@@ -9,9 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css" media="screen" type="text/css">
-    <script src="https://unpkg.com/react/umd/react.development.js" crossorigin=""></script>
-    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js" crossorigin=""></script>
-    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+
 
     <script>
         function draw() {
@@ -19,7 +17,7 @@
             var canvas = document.getElementById('canvas');
             var ctx = canvas.getContext('2d');
 
-            //Rysujemy samochód
+            //Rysuj samochod
             ctx.beginPath();
             ctx.moveTo(2 + 1.5, 40 - 15);
             ctx.lineTo(8 + 1.5, 32 - 15);
@@ -38,7 +36,7 @@
             ctx.fill();
             ctx.stroke();
 
-            //Rysujemy okna
+            //Rysuj okna
             ctx.beginPath();
             ctx.moveTo(8 + 2.5, 36 - 11);
             ctx.lineTo(8 + 2.5, 32 - 12);
@@ -52,7 +50,7 @@
             ctx.stroke();
 
 
-            // Rysujemy koła
+            // Rysuj kola
             ctx.beginPath();
             ctx.arc(34 + 1.5, 46 - 15, 4, 0, 2 * Math.PI);
             ctx.fillStyle = 'black';
@@ -87,6 +85,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react/umd/react.development.js" crossorigin=""></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js" crossorigin=""></script>
+    <script src="https://unpkg.com/babel-standalone/babel.min.js"></script>
+
     <nav class="navbar navbar-expand-lg" style="background-color: #FFC107;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -180,39 +182,63 @@
     </main>
 
     <script type="text/babel">
+        function logUserData(userInput) {
+            let flag = true;
+
+            // Sprawdz obecnosc liczb
+            if (/\d/.test(userInput)) {
+                // console.error("Wprowadziłeś liczbę!");
+                flag = false;
+            }
+
+            // Sprawdz obecnosc <>
+            if (/[<>]/.test(userInput)) {
+                // console.error("Wprowadziłeś niedozwolone znaki!");
+                flag = false;
+            }
+
+            // if (flag) {
+            //     console.log("Wprowadzone dane", userInput);
+            // }
+
+            return flag;
+        }
         const productsData = [
             { name: "BMW", quantity: 10, price: 800000 },
             { name: "Fiat", quantity: 25, price: 50000 },
             { name: "Mercedes", quantity: 15, price: 1000000 },
-            { name: "Volvo", quantity: 8, price: 400000 }
+            { name: "Volvo", quantity: 1, price: 400000 }
         ];
 
         class Transaction extends React.Component {
             print = (product) => {
                 let container = document.querySelector("#cards");
                 container.style.textAlign = "center";
-                let selectedProduct = product.name;
 
                 if (product.quantity > 0) {
-                    let customer = prompt("Please enter your name and surname", "Jan Kowalski");
-                    if (customer) {
-                        this.props.updateQuantity(product.name);
+                    let customer = prompt("W celu potwierdzenia transakcji wprowadź imię i nazwisko", "Jan Kowalski")
+                    // console.log((customer));
+                    if (logUserData(customer) === true) {
+                        if (customer) {
+                            this.props.updateQuantity(product.name);
 
-                        const now = new Date();
-                        const transactionDetails = `Data: ${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}r. | Klient: ${customer} | Produkt: ${product.name} | Liczba sztuk: 1`;
-                        container.appendChild(document.createTextNode(transactionDetails));
-                        container.appendChild(document.createElement('br'));
+                            const now = new Date();
+                            const transactionDetails = `Data: ${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}r. | Klient: ${customer} | Produkt: ${product.name} | Liczba sztuk: 1`;
+                            container.appendChild(document.createTextNode(transactionDetails));
+                            container.appendChild(document.createElement('br'));
+                        }
                     }
-                } else {
-                    alert("Product is out of stock!");
-                    // Dezaktywuj przycisk
+                    else {
+                        alert("Niepoprawne dane wejściowe!");
+                        // Dezaktywuj przycisk
+                    }
                 }
             }
 
             render() {
                 return (
                     <div>
-                        <button onClick={() => this.print(this.props.product)} disabled={this.props.product.quantity === 0}>Click me</button>
+                        <button className={`btn btn-warning`} onClick={() => this.print(this.props.product)} disabled={this.props.product.quantity === 0}>{this.props.product.name}</button>
                     </div>
                 );
             }
