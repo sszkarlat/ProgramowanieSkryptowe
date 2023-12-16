@@ -117,6 +117,13 @@
     </main>
 
     <script type="text/babel">
+        function addZero(number) {
+            if (number < 10) {
+                return "0" + number;
+            }
+            return number;
+        }
+
         function logUserData(userInput) {
             let flag = true;
 
@@ -158,7 +165,12 @@
                             this.props.updateQuantity(product.name);
 
                             const now = new Date();
-                            const transactionDetails = `Data: ${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}r. | Klient: ${customer} | Produkt: ${product.name} | Liczba sztuk: 1`;
+                            const transactionDetails = (`Data: ${addZero(now.getDate())}.${addZero(now.getMonth() + 1)}.${now.getFullYear()}r. 
+                            ${addZero(now.getHours())}:${addZero(now.getMinutes())}:${addZero(now.getSeconds())} | 
+                            Klient: ${customer} |
+                            Produkt: ${product.name} | 
+                            Liczba sztuk: 1`);
+
                             container.appendChild(document.createTextNode(transactionDetails));
                             container.appendChild(document.createElement('br'));
                         }
