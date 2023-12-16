@@ -142,10 +142,7 @@
                         <li>Silnik elektryczny</li>
                         <li>Zasięg 400km</li>
                     </ul>
-                    <div>
-                        <p>Liczba dostępnych modeli: </p>
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -155,23 +152,29 @@
                 <img class="right-align" src="pictures/BMW.jpg" alt="BMW">
                 <div class="content">
                     <h4>BMW</h4>
-                    <div>Liczba dostępnych modeli: </div>
+                    <ul>
+                        <li>Napęd na tylną oś</li>
+                        <li>W 2s do 100 km/h</li>
+                    </ul>
                 </div>
             </div>
             <div class="azure flex-column" id="volvo">
                 <img src="pictures/volvo.jpg" alt="Volvo">
                 <div class=" content">
                     <h4>Volvo</h4>
-                    <div>Liczba dostępnych modeli: </div>
+                    <ul>
+                        <li>Cichy silnik elektryczny</li>
+                        <li>Zasięg 800km</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
-
-        <div id="cards">
+        <div style="background-color: #FED777; text-align: center; padding: 20px;">
+            <h2>Wybierz swój model</h2>
+            <h5 style="padding: 10px;">Nie zwlekaj, aby dokonać zakupu, kliknij wybrany model!</h5>
+            <div id="cards"></div>
         </div>
-
-
         <div class="d-sm-flex flex-row text-white" style="background-color: green;">
             &copy;Szablony CyberAGH
         </div>
@@ -188,6 +191,7 @@
         class Transaction extends React.Component {
             print = (product) => {
                 let container = document.querySelector("#cards");
+                container.style.textAlign = "center";
                 let selectedProduct = product.name;
 
                 if (product.quantity > 0) {
@@ -199,16 +203,19 @@
                         const transactionDetails = `Data: ${now.getDate()}.${now.getMonth() + 1}.${now.getFullYear()}r. | Klient: ${customer} | Produkt: ${product.name} | Liczba sztuk: 1`;
                         container.appendChild(document.createTextNode(transactionDetails));
                         container.appendChild(document.createElement('br'));
-
-                        // Do something with transactionDetails (e.g., display it in the UI)
                     }
                 } else {
                     alert("Product is out of stock!");
+                    // Dezaktywuj przycisk
                 }
             }
 
             render() {
-                return <button onClick={() => this.print(this.props.product)}>Click me</button>
+                return (
+                    <div>
+                        <button onClick={() => this.print(this.props.product)} disabled={this.props.product.quantity === 0}>Click me</button>
+                    </div>
+                );
             }
         }
 
@@ -228,14 +235,15 @@
                 }));
             };
 
-
             render() {
                 return (
                     <div className="container-sm d-sm-flex flex-row">
                         {this.state.productsData.map((product) => (
-                            <div className={`azure flex-column ${product.outOfStock ? 'gray-background' : ''}`} key={product.name}>
+                            <div className={`flex-column`} key={product.name} style={{ margin: 'auto', backgroundColor: product.quantity === 0 ? '#ccc' : '#FED777' }}>
                                 <Transaction product={product} updateQuantity={this.updateQuantity} />
-                                Liczba dostępnych sztuk: {product.quantity}
+                                <div>
+                                    Liczba dostępnych sztuk: {product.quantity}
+                                </div>
                             </div>
                         ))}
                     </div>
