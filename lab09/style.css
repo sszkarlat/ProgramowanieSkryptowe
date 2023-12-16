@@ -1,4 +1,4 @@
-/* @keyframes rotation {
+@keyframes rotation {
     from {
         transform: rotate(0deg);
     }
@@ -6,11 +6,17 @@
     to {
         transform: rotate(360deg);
     }
-} */
+}
 
-/* .counter {
-    padding: 5px;
-} */
+#shopContainer {
+    background-color: #FED777;
+    text-align: center;
+    padding: 20px;
+}
+
+#fotter {
+    background-color: green;
+}
 
 div>.azure>img {
     border-top-left-radius: 2%;
@@ -36,7 +42,6 @@ div>.azure>img {
     animation-duration: 10s;
     animation-direction: forwards;
     animation-play-state: paused;
-    /* box-shadow: 5px 5px 5px black; */
     margin-left: 75px;
     margin-right: 75px;
 }

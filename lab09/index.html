@@ -9,73 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css" media="screen" type="text/css">
+    <script src="script.js"></script>
 
-
-    <script>
-        function draw() {
-            "use strict";
-            var canvas = document.getElementById('canvas');
-            var ctx = canvas.getContext('2d');
-
-            //Rysuj samochod
-            ctx.beginPath();
-            ctx.moveTo(2 + 1.5, 40 - 15);
-            ctx.lineTo(8 + 1.5, 32 - 15);
-            ctx.lineTo(30.6 + 1.5, 32 - 15);
-            ctx.arc(30 + 1.5, 36 - 15, 4, 30, 2 * Math.PI);
-            ctx.lineTo(34 + 1.5, 36 - 15);
-            ctx.lineTo(34 + 1.5, 40 - 15);
-            ctx.lineTo(42 + 1.5, 40 - 15);
-            ctx.arc(42 + 1.5, 44 - 15, 4, 30, 2 * Math.PI);
-            ctx.lineTo(46 + 1.5, 48 - 15);
-            ctx.lineTo(37.4 + 1.5, 48 - 15);
-            ctx.lineTo(13.6 + 1.5, 48 - 15);
-            ctx.lineTo(2 + 1.5, 48 - 15);
-            ctx.lineTo(2 + 1.5, 40 - 15);
-            ctx.fillStyle = '#F3D723';
-            ctx.fill();
-            ctx.stroke();
-
-            //Rysuj okna
-            ctx.beginPath();
-            ctx.moveTo(8 + 2.5, 36 - 11);
-            ctx.lineTo(8 + 2.5, 32 - 12);
-            ctx.lineTo(30.6 - 2.5, 32 - 12);
-            ctx.arc(30 - 2.5, 36 - 12, 4, 30, 2 * Math.PI);
-            ctx.lineTo(34 - 2.5, 36 - 11);
-            ctx.lineTo(34 - 2.5, 36 - 11);
-            ctx.lineTo(8 + 2.5, 36 - 11);
-            ctx.fillStyle = '#898888';
-            ctx.fill();
-            ctx.stroke();
-
-
-            // Rysuj kola
-            ctx.beginPath();
-            ctx.arc(34 + 1.5, 46 - 15, 4, 0, 2 * Math.PI);
-            ctx.fillStyle = 'black';
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(34 + 1.5, 46 - 15, 1, 0, 2 * Math.PI);
-            ctx.fillStyle = 'white';
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(10 + 1.5, 46 - 15, 4, 0, 2 * Math.PI);
-            ctx.fillStyle = 'black';
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.arc(10 + 1.5, 46 - 15, 1, 0, 2 * Math.PI);
-            ctx.fillStyle = 'white';
-            ctx.fill();
-            ctx.stroke();
-        }
-    </script>
     <title>
         Sklep samochodowy
     </title>
@@ -135,7 +70,7 @@
                 </div>
             </div>
             <div class=" azure flex-column" id="fiat">
-                <img src="pictures/fiat500.jpg" alt="Tu jest fiat">
+                <img src="pictures/fiat500.jpg" alt="Tu jest fiat500">
                 <div class="content">
                     <h4>Fiat 500</h4>
                     <ul>
@@ -149,7 +84,7 @@
 
         <div class="d-sm-flex flex-row-reverse">
             <div class=" azure flex-column" id="bmw">
-                <img class="right-align" src="pictures/BMW.jpg" alt="BMW">
+                <img class="right-align" src="pictures/BMW.jpg" alt="Tu jest BMW">
                 <div class="content">
                     <h4>BMW</h4>
                     <ul>
@@ -159,7 +94,7 @@
                 </div>
             </div>
             <div class="azure flex-column" id="volvo">
-                <img src="pictures/volvo.jpg" alt="Volvo">
+                <img src="pictures/volvo.jpg" alt="Tu jest Volvo">
                 <div class=" content">
                     <h4>Volvo</h4>
                     <ul>
@@ -170,13 +105,13 @@
             </div>
         </div>
 
-        <div style="background-color: #FED777; text-align: center; padding: 20px;">
+        <div id="shopContainer">
             <h2>Wybierz swój model</h2>
             <h5 style="padding: 10px;">Nie zwlekaj, aby dokonać zakupu, kliknij wybrany model!</h5>
             <div id="cards"></div>
         </div>
 
-        <div class="d-sm-flex flex-row text-white" style="background-color: green;">
+        <div id="fotter" class="d-sm-flex flex-row text-white">
             &copy;Szablony CyberAGH
         </div>
     </main>
