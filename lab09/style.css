@@ -8,9 +8,9 @@
     }
 } */
 
-.counter {
+/* .counter {
     padding: 5px;
-}
+} */
 
 div>.azure>img {
     border-top-left-radius: 2%;
@@ -36,6 +36,9 @@ div>.azure>img {
     animation-duration: 10s;
     animation-direction: forwards;
     animation-play-state: paused;
+    /* box-shadow: 5px 5px 5px black; */
+    margin-left: 75px;
+    margin-right: 75px;
 }
 
 h4 {
@@ -48,19 +51,7 @@ h4 {
     flex-grow: 0;
 }
 
-main,
-footer {
-    margin-left: 75px;
-    margin-right: 75px;
-}
-
 @media screen and (min-width: 600px) {
-    /* .form-group {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-    } */
-
     #mercedes {
         margin-right: 20px;
         width: 50%;
@@ -85,11 +76,6 @@ footer {
 }
 
 @media screen and (max-width: 600px) {
-    /* .form-group {
-        display: flex;
-        flex-direction: row;
-    } */
-
     #volvo {
         width: 70%;
         position: relative;
