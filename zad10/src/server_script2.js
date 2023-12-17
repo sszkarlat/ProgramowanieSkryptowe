@@ -7,11 +7,11 @@ function dodaj_wpis() {
   let to_return = "";
 
   // pobieramy plik json i iterujemy po nim
-  let read_json = readFileSync("wpis.json", "utf8");
-  let tab = JSON.parse(read_json);
+  let read_json = readFileSync("entry.json", "utf8");
+  let array = JSON.parse(read_json);
 
-  for (const i in tab) {
-    let items = tab[i];
+  for (const i in array) {
+    let items = array[i];
     to_return += `<h1>${items["name"]}</h1>\n<p>${items["opis"]}</p>`;
   }
   return to_return;
@@ -28,7 +28,8 @@ function requestListener(request, response) {
   const url = new URL(request.url, `http://${request.headers.host}`);
   /* ************************************************** */
   // if (!request.headers['user-agent'])
-  if (url.pathname !== "/favicon.ico") console.log(url);
+  if (url.pathname !== "/favicon.ico") 
+    console.log(url);
 
   /* ******** */
   /* "Routes" */
@@ -51,7 +52,7 @@ function requestListener(request, response) {
   <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Czekam az ktos zapomni i zostawi Jakub Liana</title>
+	<title>Księga gości</title>
   </head>
   <body>
   <div>
@@ -60,17 +61,17 @@ function requestListener(request, response) {
         `
   </div>
 	<main>
-	  <h3>Nowy wpis:</h3>
-	  <form method="GET" action="/dodaj_wpis">
-		<label for="name">Twoje imię i nazwisko</label>
-		<br>
-		<input name="name">
-		<br>
-		<label for="area">Treść wpisu</label>
-		<br>
-		<textarea name="area">Napisz cos ... </textarea>
-		<br>
-		<input type="submit">
+    <h3>Nowy wpis:</h3>
+    <form method="GET" action="/dodaj_wpis">
+      <label for="name">Twoje imię i nazwisko</label>
+      <br>
+      <input name="name" placeholder="Jerzy Wiśniewski">
+      <br>
+      <label for="area">Treść wpisu</label>
+      <br>
+      <textarea name="area" placeholder="Proszę o kontankt osoby, które ze mną studiowały - tel. 12 345 67 89"></textarea>
+      <br>
+      <input type="submit">
 	  </form>
 	</main>
   </body>
@@ -84,22 +85,22 @@ function requestListener(request, response) {
   /* Route "GET('/dodaj_wpis')" */
   /* ---------------------- */
     // pobieramy plik json i iterujemy po nim
-    let read_json = readFileSync("wpis.json", "utf8");
-    let tab = JSON.parse(read_json);
+    let read_json = readFileSync("entry.json", "utf8");
+    let array = JSON.parse(read_json);
 
     // uposledzone liczenie dlugosci
     let ctr = 0;
-    for (let c in tab) {
+    for (let c in array) {
       ctr += 1;
     }
     ctr += 1;
-    tab[`${ctr}`] = {
+    array[`${ctr}`] = {
       name: url.searchParams.get("name"),
       opis: url.searchParams.get("area"),
     };
 
     // zapis do pliku
-    writeFileSync("wpis.json", JSON.stringify(tab));
+    writeFileSync("entry.json", JSON.stringify(array));
 
     // Creating an answer header — we inform the browser that the returned data is plain text
     response.writeHead(302, { Location: "/" });
