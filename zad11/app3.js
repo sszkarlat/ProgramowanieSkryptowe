@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// some things from mistero polako
+// Dodanie tablicy obiektów o nazwie student
 let students = [
   {
     fname: "Jan",
