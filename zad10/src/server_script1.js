@@ -3,6 +3,7 @@
 
 import http from "node:http";
 import { URL } from "node:url";
+import { parse } from "querystring";
 
 /**
  * Handles incoming requests.
@@ -26,9 +27,7 @@ function requestListener(request, response) {
   const url = new URL(request.url, `http://${request.headers.host}`);
   /* ************************************************** */
   // if (!request.headers['user-agent'])
-  if (url.pathname !== "/favicon.ico")
-    // View detailed URL information
-    console.log(url);
+  if (url.pathname !== "/favicon.ico") console.log(url);
 
   /* ******** */
   /* "Routes" */
@@ -48,25 +47,35 @@ function requestListener(request, response) {
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vanilla Node.js application</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Vanilla Node.js application</title>
   </head>
   <body>
-    <main>
-      <h1>Vanilla Node.js application</h1>
-      <form method="GET" action="/submit">
-        <label for="name">Give your name</label>
-        <input name="name">
-        <br>
-        <input type="submit">
-        <input type="reset">
-      </form>
-    </main>
+	<main>
+	  <h1>Vanilla Node.js application</h1>
+	  <form method="GET" action="/submit">
+		<label for="name">Give your name</label>
+		<input name="name">
+		<br>
+		<input type="submit">
+		<input type="reset">
+	  </form>
+	</main>
   </body>
 </html>`);
     /* ************************************************** */
     response.end(); // The end of the response — send it to the browser
+  } else if (url.pathname === "/" && request.method === "POST") {
+
+  /* ---------------------- */
+  /* Route "POST('/')" */
+  /* ---------------------- */
+    response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+    collectRequestData(request, (result) => {
+      response.write(`Hello ${result.name}`);
+      response.end(); // The end of the response — send it to the browser
+    });
   } else if (url.pathname === "/submit" && request.method === "GET") {
 
   /* ---------------------- */
@@ -83,12 +92,27 @@ function requestListener(request, response) {
     response.end(); // The end of the response — send it to the browser
   } else {
 
-  /* ---------------------- */
-  /* If no route is matched */
-  /* ---------------------- */
+  /* -------------------------- */
+  /* If no route is implemented */
+  /* -------------------------- */
     response.writeHead(501, { "Content-Type": "text/plain; charset=utf-8" });
     response.write("Error 501: Not implemented");
     response.end();
+  }
+}
+
+function collectRequestData(request, callback) {
+  const FORM_URLENCODED = "application/x-www-form-urlencoded";
+  if (request.headers["content-type"] === FORM_URLENCODED) {
+    let body = "";
+    request.on("data", (chunk) => {
+      body += chunk.toString();
+    });
+    request.on("end", () => {
+      callback(parse(body));
+    });
+  } else {
+    callback(null);
   }
 }
 
