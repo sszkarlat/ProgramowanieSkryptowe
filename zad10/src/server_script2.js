@@ -88,11 +88,8 @@ function requestListener(request, response) {
     let read_json = readFileSync("entry.json", "utf8");
     let array = JSON.parse(read_json);
 
-    // uposledzone liczenie dlugosci
-    let ctr = 0;
-    for (let c in array) {
-      ctr += 1;
-    }
+    // let ctr = 0;
+    let ctr = array.length;
     ctr += 1;
     array[`${ctr}`] = {
       name: url.searchParams.get("name"),
