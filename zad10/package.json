@@ -14,7 +14,11 @@
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^11.2.0"
-  
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "jsdoc": "^4.0.2",
+    "supertest": "^6.3.3"
+  }
 }

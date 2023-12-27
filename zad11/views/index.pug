@@ -1,0 +1,46 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
+        title Express application
+        style.
+          table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+          }
+    body
+        main
+            h1 Second Express application
+            form(method='POST' action='/')
+                label(for='name') Give your name
+                input(name='name')
+                br
+                input(type='submit')
+                input(type='reset')
+            img(src='/img/zima.jpg')
+            if app2Running
+              table
+                tr
+                    th Nazwisko
+                    th Imię
+                each val in siteStudents
+                  tr
+                        td=val.lname
+                        td=val.fname
+            else if app3Running
+              table
+                tr
+                    th Nazwisko
+                    th Imię
+                    th Wydział
+                each val in students
+                  tr
+                        td=val.nazwisko
+                        td=val.imie
+                        td=val.wydzial
