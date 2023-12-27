@@ -106,126 +106,17 @@
         </div>
 
         <div id="shopContainer">
-            <h2>Wybierz swój model</h2>
-            <h5 style="padding: 10px;">Nie zwlekaj, aby dokonać zakupu, kliknij wybrany model!</h5>
-            <div id="cards"></div>
+            <h2>Skorzystaj z naszej oferty!</h2>
+            <form class="d-flex justify-content-center">
+                <input class="form-control" type="text" id="commandLine" name="commandLine">
+                <button class="btn btn-warning" type="submit" onclick="executeCommand()">Wykonaj</button>
+            </form>
         </div>
 
         <div id="fotter" class="d-sm-flex flex-row text-white">
             &copy;Szablony CyberAGH
         </div>
     </main>
-
-    <script type="text/babel">
-        function addZero(number) {
-            if (number < 10) {
-                return "0" + number;
-            }
-            return number;
-        }
-
-        function logUserData(userInput) {
-            let flag = true;
-
-            // Sprawdz obecnosc liczb
-            if (/\d/.test(userInput)) {
-                // console.error("Wprowadziłeś liczbę!");
-                flag = false;
-            }
-
-            // Sprawdz obecnosc <>
-            if (/[<>]/.test(userInput)) {
-                // console.error("Wprowadziłeś niedozwolone znaki!");
-                flag = false;
-            }
-
-            // if (flag) {
-            //     console.log("Wprowadzone dane", userInput);
-            // }
-
-            return flag;
-        }
-        const productsData = [
-            { name: "BMW", quantity: 10, price: 800000 },
-            { name: "Fiat", quantity: 25, price: 50000 },
-            { name: "Mercedes1", quantity: 15, price: 1000000 },
-            { name: "Volvo", quantity: 1, price: 400000 },
-            { name: "Volvo1", quantity: 1, price: 400000 }
-        ];
-
-        class Transaction extends React.Component {
-            print = (product) => {
-                let container = document.querySelector("#cards");
-                container.style.textAlign = "center";
-
-                if (product.quantity > 0) {
-                    let customer = prompt("W celu potwierdzenia transakcji wprowadź imię i nazwisko", "Jan Kowalski");
-                    // console.log((customer));
-                    if (logUserData(customer) === true) {
-                        if (customer) {
-                            this.props.updateQuantity(product.name);
-
-                            const now = new Date();
-                            const transactionDetails = (`Data: ${addZero(now.getDate())}.${addZero(now.getMonth() + 1)}.${now.getFullYear()}r. 
-                            ${addZero(now.getHours())}:${addZero(now.getMinutes())}:${addZero(now.getSeconds())} | 
-                            Klient: ${customer} |
-                            Produkt: ${product.name} | 
-                            Liczba sztuk: 1`);
-
-                            container.appendChild(document.createTextNode(transactionDetails));
-                            container.appendChild(document.createElement('br'));
-                        }
-                    }
-                    else {
-                        alert("Niepoprawne dane wejściowe!");
-                        // Dezaktywuj przycisk
-                    }
-                }
-            }
-
-            render() {
-                return (
-                    <div>
-                        <button className={`btn btn-warning`} onClick={() => this.print(this.props.product)} disabled={this.props.product.quantity === 0}>{this.props.product.name}</button>
-                    </div>
-                );
-            }
-        }
-
-        class Counter extends React.Component {
-            constructor(props) {
-                super(props);
-                this.state = {
-                    productsData: props.productsData,
-                };
-            }
-
-            updateQuantity = (productName) => {
-                this.setState((prevState) => ({
-                    productsData: prevState.productsData.map((product) =>
-                        product.name === productName ? { ...product, quantity: product.quantity - 1 } : product
-                    ),
-                }));
-            };
-
-            render() {
-                return (
-                    <div className="container-sm d-sm-flex flex-row">
-                        {this.state.productsData.map((product) => (
-                            <div className={`flex-column`} key={product.name} style={{ margin: 'auto', backgroundColor: product.quantity === 0 ? '#ccc' : '#FED777' }}>
-                                <Transaction product={product} updateQuantity={this.updateQuantity} />
-                                <div>
-                                    Liczba dostępnych sztuk: {product.quantity}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                );
-            }
-        }
-
-        ReactDOM.createRoot(document.querySelector("#cards")).render(<Counter productsData={productsData} />)
-    </script>
 
 </body>
 
