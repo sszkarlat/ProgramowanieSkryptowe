@@ -31,6 +31,7 @@
 
       #commandLine {
         width: 20%;
+        display: inline-block;
       }
 
       .shopContainer {
@@ -319,9 +320,9 @@
       <div class="shopContainer">
         <h2>Skorzystaj z naszej oferty!</h2>
         <form id="myForm">
-          <label for="commandLine">Komenda:</label>
-          <input type="text" id="commandLine" name="commandLine" required />
-          <button type="submit" onclick="executeCommand()">Wykonaj</button>
+          <!-- <label for="commandLine">Komenda:</label> -->
+          <input class="form-control" placeholder="Linia komend" type="text" id="commandLine" name="commandLine" required />
+          <button class="btn btn-warning" type="submit" onclick="executeCommand()">Wykonaj</button>
         </form>
       </div>
       <div id="consoleOutput" class="shopContainer"></div>
@@ -336,7 +337,7 @@
             .then((data) => {
               // Wyświetl wynik w divie consoleOutput
               var consoleOutput = document.getElementById("consoleOutput");
-              consoleOutput.innerHTML = "<pre>" + data + "</pre>";
+              consoleOutput.innerHTML = `<pre style="font-family: font-family: var(--bs-body-font-family); font-size: 18px">` + data + "</pre>";
             })
             .catch((error) => console.error("Błąd:", error));
         }
