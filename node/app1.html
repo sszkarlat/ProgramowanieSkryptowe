@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sklep z ćwiczeniami Python</title>
+  </head>
+
+  <body>
+    <div>
+      <form id="myForm">
+        <label for="commandLine">Komenda:</label>
+        <input type="text" id="commandLine" name="commandLine" required />
+        <button type="submit" onclick="executeCommandonServer()">
+          Wykonaj
+        </button>
+      </form>
+    </div>
+
+    <div id="consoleOutput"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Dodaj nasłuchiwanie zdarzeń tylko jeśli formularz zostanie znaleziony
+        var form = document.getElementById("myForm");
+        if (form) {
+          form.addEventListener("submit", function (event) {
+            event.preventDefault(); // Zapobiegnij domyślnej wysyłce formularza
+            executeCommandonServer();
+          });
+        }
+      });
+
+      function executeCommandonServer() {
+        var commandLine = document.getElementById("commandLine").value;
+
+        // Wyślij komendę na serwer
+        fetch("/submit?command=" + encodeURIComponent(commandLine))
+          .then((response) => response.text())
+          .then((data) => {
+            // Wyświetl wynik w divie consoleOutput
+            var consoleOutput = document.getElementById("consoleOutput");
+            consoleOutput.innerHTML = "<pre>" + data + "</pre>";
+          })
+          .catch((error) => console.error("Błąd:", error));
+      }
+    </script>
+  </body>
+</html>

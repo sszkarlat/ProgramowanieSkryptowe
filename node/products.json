@@ -1,0 +1,22 @@
+[
+  {
+    "name": "BMW",
+    "quantity": 10,
+    "price": 800000
+  },
+  {
+    "name": "Fiat",
+    "quantity": 25,
+    "price": 50000
+  },
+  {
+    "name": "Mercedes",
+    "quantity": 15,
+    "price": 1000000
+  },
+  {
+    "name": "Volvo",
+    "quantity": 1,
+    "price": 400000
+  }
+]
