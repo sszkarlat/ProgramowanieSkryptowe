@@ -1,122 +1,230 @@
-// const http = require('node:http');
-// const { URL } = require('node:url');
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
 
-import http from "node:http";
-import { URL } from "node:url";
-import { parse } from "querystring";
+const server = http.createServer(requestListener);
+const PORT = process.env.PORT || 8000;
 
-/**
- * Handles incoming requests.
- *
- * @param {IncomingMessage} request - Input stream — contains data received from the browser, e.g,. encoded contents of HTML form fields.
- * @param {ServerResponse} response - Output stream — put in it data that you want to send back to the browser.
- * The answer sent by this stream must consist of two parts: the header and the body.
- * <ul>
- *  <li>The header contains, among others, information about the type (MIME) of data contained in the body.
- *  <li>The body contains the correct data, e.g. a form definition.
- * </ul>
- * @author Szymon Szkarłat
- */
+const clientsFile = path.join(__dirname, "clients.json");
+const productsFile = path.join(__dirname, "products.json");
+
+let clientsData = readJsonFile(clientsFile) || [];
+let productsData = readJsonFile(productsFile) || [];
+
+function readJsonFile(filename) {
+  try {
+    const data = fs.readFileSync(filename, "utf8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error(`Error reading file ${filename}:`, error.message);
+    return null;
+  }
+}
+
+const writeLock = {};
+
+async function writeJsonFile(filename, jsonData) {
+  if (!writeLock[filename]) {
+    writeLock[filename] = true;
+
+    try {
+      const data = JSON.stringify(jsonData, null, 2);
+
+      // Opóźnienie zapisu pliku (np. 500 ms)
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      await fs.promises.writeFile(filename, data, "utf8");
+      console.log(`Data written to ${filename}`);
+    } catch (error) {
+      console.error(`Error writing to file ${filename}:`, error.message);
+    } finally {
+      writeLock[filename] = false;
+    }
+  } else {
+    console.log(
+      `Write operation for ${filename} is already in progress. Skipping...`
+    );
+  }
+}
+
+server.listen(PORT, () => {
+  console.log(`Serwer działa na porcie ${PORT}`);
+  console.log('Aby zatrzymać serwer, naciśnij "CTRL + C"');
+});
 
 function requestListener(request, response) {
-  console.log("--------------------------------------");
-  console.log(`The relative URL of the current request: ${request.url}`);
-  console.log(`Access method: ${request.method}`);
-  console.log("--------------------------------------");
-  // Create the URL object
   const url = new URL(request.url, `http://${request.headers.host}`);
-  /* ************************************************** */
-  // if (!request.headers['user-agent'])
-  if (url.pathname !== "/favicon.ico") console.log(url);
 
-  /* ******** */
-  /* "Routes" */
-  /* ******** */
+  if (url.pathname.startsWith("/pictures/") && request.method === "GET") {
+    const imageName = path.basename(url.pathname);
+    const imagePath = path.join(__dirname, "pictures", imageName);
 
-  /* ---------------- */
-  /* Route "GET('/')" */
-  /* ---------------- */
-  if (url.pathname === "/" && request.method === "GET") {
-    // Generating the form if the relative URL is '/', and the GET method was used to send data to the server'
-    /* ************************************************** */
-    // Creating an answer header — we inform the browser that the returned data is HTML
-    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    /* ************************************************** */
-    // Setting a response body
-    response.write(`
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Vanilla Node.js application</title>
-  </head>
-  <body>
-	<main>
-	  <h1>Vanilla Node.js application</h1>
-	  <form method="GET" action="/submit">
-		<label for="name">Give your name</label>
-		<input name="name">
-		<br>
-		<input type="submit">
-		<input type="reset">
-	  </form>
-	</main>
-  </body>
-</html>`);
-    /* ************************************************** */
-    response.end(); // The end of the response — send it to the browser
-  } else if (url.pathname === "/" && request.method === "POST") {
-    /* ---------------------- */
-    /* Route "POST('/')" */
-    /* ---------------------- */
-    response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
-    collectRequestData(request, (result) => {
-      response.write(`Hello ${result.name}`);
-      response.end(); // The end of the response — send it to the browser
+    fs.access(imagePath, fs.constants.R_OK, (err) => {
+      if (err) {
+        response.writeHead(404, {
+          "Content-Type": "text/plain; charset=utf-8",
+        });
+        response.write("Not Found");
+        response.end();
+      } else {
+        response.writeHead(200, { "Content-Type": "image/jpeg" }); // Ustaw typ zawartości w zależności od formatu obrazu
+        fs.createReadStream(imagePath).pipe(response);
+      }
     });
+  } else if (url.pathname === "/" && request.method === "GET") {
+    // Obsługa żądania GET dla ścieżki "/"
+    // Wysyłamy odpowiednią zawartość HTML do klienta
+    response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+    const htmlContent = fs.readFileSync(
+      path.join(__dirname, "index.html"),
+      "utf8"
+    );
+    response.write(htmlContent);
+    response.end();
   } else if (url.pathname === "/submit" && request.method === "GET") {
-    /* ---------------------- */
-    /* Route "GET('/submit')" */
-    /* ---------------------- */
-    // Processing the form content, if the relative URL is '/submit', and the GET method was used to send data to the server'
-    /* ************************************************** */
-    // Creating an answer header — we inform the browser that the returned data is plain text
+    // Obsługa żądania GET dla ścieżki "/submit"
+    const command = url.searchParams.get("command");
+    const result = executeCommandOnServer(command);
+
     response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
-    /* ************************************************** */
-    // Place given data (here: 'Hello <name>') in the body of the answer
-    response.write(`Hello ${url.searchParams.get("name")}`); // "url.searchParams.get('name')" contains the contents of the field (form) named 'name'
-    /* ************************************************** */
-    response.end(); // The end of the response — send it to the browser
+    response.write(result);
+    response.end();
   } else {
-    /* -------------------------- */
-    /* If no route is implemented */
-    /* -------------------------- */
     response.writeHead(501, { "Content-Type": "text/plain; charset=utf-8" });
-    response.write("Error 501: Not implemented");
+    response.write("Błąd 501: Niezaimplementowane");
     response.end();
   }
 }
 
-function collectRequestData(request, callback) {
-  const FORM_URLENCODED = "application/x-www-form-urlencoded";
-  if (request.headers["content-type"] === FORM_URLENCODED) {
-    let body = "";
-    request.on("data", (chunk) => {
-      body += chunk.toString();
-    });
-    request.on("end", () => {
-      callback(parse(body));
-    });
-  } else {
-    callback(null);
+function executeCommandOnServer(command) {
+  const commandParts = command.split(" ");
+  const operation = commandParts[0].toLowerCase();
+
+  switch (operation) {
+    case "sell":
+      return sellProductOnServer(commandParts);
+    case "showclients":
+      return showClientsOnServer();
+    case "showhistory":
+      return showHistoryOnServer(commandParts);
+    case "showwarehouse":
+      return showWarehouseOnServer();
+    case "addclient":
+      return addClientOnServer(commandParts);
+    case "showproductdetails":
+      return showProductDetailsOnServer(commandParts);
+    default:
+      return `Nieznana operacja: ${operation}`;
   }
 }
 
-/* ************************************************** */
-/* Main block
-/* ************************************************** */
-const server = http.createServer(requestListener); // The 'requestListener' function is defined above
-server.listen(8000);
-console.log("The server was started on port 8000");
-console.log('To stop the server, press "CTRL + C"');
+function sellProductOnServer(commandParts) {
+  const customerFirstName = commandParts[1];
+  const customerLastName = commandParts[2];
+  const productName = commandParts[3];
+  const quantityToSell = parseInt(commandParts[4]);
+
+  const customer = clientsData.find(
+    (c) => c.firstName === customerFirstName && c.lastName === customerLastName
+  );
+  const productIndex = productsData.findIndex((p) => p.name === productName);
+
+  if (customer && productIndex !== -1 && quantityToSell > 0) {
+    const product = productsData[productIndex];
+
+    if (product.quantity >= quantityToSell) {
+      product.quantity -= quantityToSell;
+
+      // Utwórz nowy obiekt historii zakupów dla każdego zakupu
+      const cost = product.price * quantityToSell;
+      const purchase = {
+        product: { name: product.name, price: product.price },
+        quantity: quantityToSell,
+        date: new Date(),
+        totalCost: cost,
+      };
+
+      // Sprawdź, czy istnieje tablica purchaseHistory i utwórz ją, jeśli nie
+      customer.purchaseHistory = customer.purchaseHistory || [];
+
+      // Utwórz nową tablicę historii zakupów z nowym zakupem
+      customer.purchaseHistory.push(purchase);
+
+      // Aktualizuj pliki JSON po zakupie
+      //   writeJsonFile(clientsFile, clientsData);
+      //   writeJsonFile(productsFile, productsData);
+
+      const successMessage = `Sprzedano ${quantityToSell} ${productName} dla klienta ${customerFirstName} ${customerLastName}. Kosztowało to: ${cost}zł`;
+      return successMessage;
+    } else {
+      return `Produkt ${productName} jest niedostępny albo nie można go kupić w takiej ilości.`;
+    }
+  } else {
+    return "Nieprawidłowe dane (być może chcesz kupić ujemną ilość towaru).";
+  }
+}
+
+function showClientsOnServer() {
+  const customersList = clientsData.map(
+    (customer) => `${customer.firstName} ${customer.lastName}`
+  );
+  return `Lista klientów: ${customersList.join(", ")}`;
+}
+
+function showHistoryOnServer(commandParts) {
+  const customerFirstName = commandParts[1];
+  const customerLastName = commandParts[2];
+  const customer = clientsData.find(
+    (c) => c.firstName === customerFirstName && c.lastName === customerLastName
+  );
+
+  if (customer) {
+    const purchaseHistory = customer.purchaseHistory || [];
+    const historyDetails = purchaseHistory.map(
+      (purchase) =>
+        `- ${purchase.product.name}, liczba sztuk: ${purchase.quantity}, cena: ${purchase.totalCost}zł`
+    );
+    const totalCost = purchaseHistory.reduce(
+      (sum, purchase) => sum + purchase.totalCost,
+      0
+    );
+
+    return `Historia transakcji dla klienta ${customerFirstName} ${customerLastName}:\n${historyDetails.join(
+      "\n"
+    )}\nWydano łącznie: ${totalCost}`;
+  } else {
+    return `Klienta ${customerFirstName} ${customerLastName} nie znaleziono.`;
+  }
+}
+
+function showWarehouseOnServer() {
+  const inventoryDetails = productsData.map(
+    (product) => `- ${product.name}: ${product.quantity} sztuk`
+  );
+  return `Stan magazynu:\n${inventoryDetails.join("\n")}`;
+}
+
+function addClientOnServer(commandParts) {
+  const firstName = commandParts[1];
+  const lastName = commandParts[2];
+
+  if (firstName && lastName) {
+    const newCustomer = { firstName, lastName, purchaseHistory: [] };
+    clientsData.push(newCustomer);
+
+    return `Dodano nowego klienta: ${firstName} ${lastName}`;
+  } else {
+    return "Nieprawidłowe dane wejściowe.";
+  }
+}
+
+function showProductDetailsOnServer(commandParts) {
+  const productName = commandParts[1];
+  const product = productsData.find((p) => p.name === productName);
+
+  if (product) {
+    return `Szczegóły produktu:\nNazwa: ${product.name}\nIlość dostępnych: ${product.quantity}\nCena: ${product.price}zł`;
+  } else {
+    return `Nie znaleziono produktu o nazwie ${productName}`;
+  }
+}
