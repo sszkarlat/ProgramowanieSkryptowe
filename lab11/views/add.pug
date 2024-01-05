@@ -1,0 +1,11 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Panel admina
+    body 
+        h2 Dodaj nowy produkt!
+        form(method="POST" action="/admin/submit")
+            input(placeholder="Wprowadź produkt" type="text" name="commandLine", required)
+            button(type="submit") Wykonaj

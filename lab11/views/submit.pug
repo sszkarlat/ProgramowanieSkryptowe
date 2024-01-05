@@ -1,0 +1,11 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        title Formularz
+    body 
+        h2 Skorzystaj z naszej oferty!
+        form(method="POST" action="/client/submit")
+            input(placeholder="Wprowadź polecenie" type="text" name="commandLine", required)
+            button(type="submit") Wykonaj
