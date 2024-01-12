@@ -1,0 +1,107 @@
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#clientPanel,
+#adminPanel {
+    margin: 5px;
+}
+
+.shopContainer {
+    background-color: #fed777;
+    text-align: center;
+    padding: 20px;
+}
+
+.card {
+    background-color: #fed777;
+    margin: 10px;
+}
+
+#fotter {
+    background-color: green;
+}
+
+div>.azure>img {
+    border-top-left-radius: 2%;
+    border-top-right-radius: 2%;
+    width: 100%;
+}
+
+.azure:hover {
+    animation-name: rotation;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-direction: forwards;
+    animation-play-state: running;
+}
+
+.azure {
+    border-style: solid;
+    border-color: #a8a8a8;
+    border-width: 2px;
+    border-radius: 3%;
+    animation-name: rotation;
+    animation-iteration-count: infinite;
+    animation-duration: 10s;
+    animation-direction: forwards;
+    animation-play-state: paused;
+    margin-left: 75px;
+    margin-right: 75px;
+}
+
+h4 {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+h2 {
+    padding-bottom: 10px;
+}
+
+.navbar-collapse {
+    flex-grow: 0;
+}
+
+@media screen and (min-width: 600px) {
+    #mercedes {
+        margin-right: 20px;
+        width: 50%;
+        height: 70%;
+    }
+
+    #fiat {
+        width: 30%;
+        height: 20%;
+    }
+
+    #volvo {
+        margin-right: 20px;
+        width: 30%;
+        height: 30%;
+    }
+
+    #bmw {
+        width: 30%;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #volvo {
+        width: 70%;
+        position: relative;
+        left: 30%;
+    }
+
+    #bmw {
+        width: 50%;
+    }
+}
