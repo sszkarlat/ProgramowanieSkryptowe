@@ -28,7 +28,7 @@
     "test": ""
   },
   "dependencies": {
-    "dejs": "^0.7.5",
+    "dejs": "^0.7.0",
     "mongodb": "^6.3.0"
   }
 }
