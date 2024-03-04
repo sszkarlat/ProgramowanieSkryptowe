@@ -2,7 +2,7 @@
 Repozytorium to zawiera kod, który wyprodukowałem podczas zajęć laboratoryjnych z przedmiotu Programowanie Skryptowe. Głównie jest to Python, JS, HTML & CSS.
 
 # Co, gdzie jest?
-## Zadania
+## Zadania :house:
 1. Podstawy języka Python:
 - jakie typowanie oferuje Python: [słabe](https://pl.wikipedia.org/wiki/Typowanie_s%C5%82abe), [silne](), [statyczne](https://pl.wikipedia.org/wiki/Typowanie_statyczne) czy [dynamiczne](https://pl.wikipedia.org/wiki/Typowanie_dynamiczne)
 - funkcje w Python
@@ -13,5 +13,5 @@ Repozytorium to zawiera kod, który wyprodukowałem podczas zajęć laboratoryjn
 - przetwarzanie danych a linia komend 
 
 
-## Laboratoria
+## Laboratoria :computer:
 1. 
