@@ -45,7 +45,7 @@ Repozytorium to zawiera kod, który wyprodukowałem podczas zajęć laboratoryjn
 - Python vs C:
     * funkcje biblioteczne do [obsługi napisów](https://www.gnu.org/software/libc/manual/html_node/String-and-Array-Utilities.html) oraz [wyrażeń regularnych](https://www.gnu.org/software/libc/manual/html_node/Pattern-Matching.html)
     * usługi [przetwarzania tekstu w Python](https://docs.python.org/pl/3/library/text.html)
-- zaawansowana obsługi linii komend (CLI - Command Line):
+- zaawansowana obsługa linii komend (CLI - Command Line):
     * [parsery](https://newsblog.pl/jak-analizowac-argumenty-wiersza-polecen-w-pythonie/) (tzw. parsowanie (analizowanie) linii komend)
     * do obsługi linii komend używa się modułu/parsera [argparse](https://docs.python.org/pl/3/library/argparse.html) (zalecany) lub [getopt](https://docs.python.org/pl/3/library/getopt.html) (na wzór używanej w C funkcji [getopt()](https://en.wikipedia.org/wiki/Getopt))
     * Parser argparse generuje angielskojęzyczną wersje pomocy. Możliwe jest [wygenerowanie wersji polskojęzycznej poprzez tłumaczenie komunikatów](https://stackoverflow.com/questions/22951442/how-to-make-pythons-argparse-generate-non-english-text) 
