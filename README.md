@@ -56,7 +56,7 @@ Repozytorium to zawiera kod, który wyprodukowałem podczas zajęć laboratoryjn
     * w artykule [__init__ Vs __new__ Methods In Python](https://geekpython.in/init-vs-new) – With Examples wyjaśniono, jak działają te metody
 - hermetyzacja:
     * [akcesory i mutatory](https://www.slawomirkwiatkowski.pl/index.php/2019/09/08/akcesory-i-mutatory-w-pythonie-cz-1/) w Python
-    * Wyzwanie Python: [„Programowanie obiektowe”](https://www.kodolamacz.pl/blog/wyzwanie-python-4-programowanie-obiektowe/) & [YT] (https://www.youtube.com/watch?v=qDDUTDMljvk)
+    * Wyzwanie Python: [„Programowanie obiektowe”](https://www.kodolamacz.pl/blog/wyzwanie-python-4-programowanie-obiektowe/) & [YT](https://www.youtube.com/watch?v=qDDUTDMljvk)
     * sprawdzanie typu argumentu za pomocą funkcji [isinstance()](https://www.programiz.com/python-programming/methods/built-in/isinstance)
 - tworzenie typu wyliczeniowego, [dokumentacja](https://docs.python.org/3/library/enum.html) 
 
