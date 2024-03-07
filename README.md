@@ -50,15 +50,60 @@ Repozytorium to zawiera kod, który wyprodukowałem podczas zajęć laboratoryjn
     * do obsługi linii komend używa się modułu/parsera [argparse](https://docs.python.org/pl/3/library/argparse.html) (zalecany) lub [getopt](https://docs.python.org/pl/3/library/getopt.html) (na wzór używanej w C funkcji [getopt()](https://en.wikipedia.org/wiki/Getopt))
     * Parser argparse generuje angielskojęzyczną wersje pomocy. Możliwe jest [wygenerowanie wersji polskojęzycznej poprzez tłumaczenie komunikatów](https://stackoverflow.com/questions/22951442/how-to-make-pythons-argparse-generate-non-english-text) 
 
-### 2. Klasy oraz enumy: :coffee:
+### 3. Klasy oraz enumy: :coffee:
 - Rodzaje metod klas:
     * programowanie obiektowe | Metody specjalne [film na YT](https://www.youtube.com/watch?v=KgP_9A_x-Qo)
-    * w artykule [__init__ Vs __new__ Methods In Python](https://geekpython.in/init-vs-new) – With Examples wyjaśniono, jak działają te metody
+    * w artykule [_/__init__ Vs __new__ Methods In Python_](https://geekpython.in/init-vs-new) – With Examples wyjaśniono, jak działają te metody
 - hermetyzacja:
     * [akcesory i mutatory](https://www.slawomirkwiatkowski.pl/index.php/2019/09/08/akcesory-i-mutatory-w-pythonie-cz-1/) w Python
-    * Wyzwanie Python: [„Programowanie obiektowe”](https://www.kodolamacz.pl/blog/wyzwanie-python-4-programowanie-obiektowe/) & [YT](https://www.youtube.com/watch?v=qDDUTDMljvk)
+    * Wyzwanie Python: [_„Programowanie obiektowe”_](https://www.kodolamacz.pl/blog/wyzwanie-python-4-programowanie-obiektowe/) & [YT](https://www.youtube.com/watch?v=qDDUTDMljvk)
     * sprawdzanie typu argumentu za pomocą funkcji [isinstance()](https://www.programiz.com/python-programming/methods/built-in/isinstance)
-- tworzenie typu wyliczeniowego, [dokumentacja](https://docs.python.org/3/library/enum.html) 
+- tworzenie typu wyliczeniowego, [dokumentacja](https://docs.python.org/3/library/enum.html)
+
+### 4. Interakcja między obiektami: :electric_plug:
+- Type [hints](https://docs.python.org/pl/3/library/typing.html) & [film na YT](https://www.youtube.com/watch?v=WoasJKaAvaI)
+- Enum z metodami:
+    * Python’s self type: _“How to annotate methods that return self”_ [article](https://realpython.com/python-type-self/)
+    * nowe [typy wyliczeniowe](https://www.golinuxcloud.com/python-enum/)
+- kompozycja:
+    * Python obiektowy - [kompozycja](https://www.youtube.com/watch?v=C4nOLhfq7L4)
+    * Jak używać i odnotowywać domyślne argumenty w funkcjach Python? [artykuł](https://pl.from-locals.com/python-argument-default/)
+    * [zasada DRY](https://boringowl.io/blog/zasada-dry-w-programowaniu-strategie-sprzyjajace-optymalizacji-i-poprawie-jakosci-kodu) - z ang. _"Don't Repeat Yourself"_ -_"Nie powtarzaj się"_ - reguła zalecająca unikanie powtarzania tego samego fragmentu kodu.
+    * [kurs TDD część 2](https://dariuszwozniak.net/posts/kurs-tdd-2-testy-jednostkowe-a-testy-integracyjne/) - testy jednostkowe a testy integracyjne; jakie są podstawowe różnice
+- tworzenie symulacji:
+    * Python [hash](https://www.pythontutorial.net/python-oop/python-__hash__/)
+
+### 5. Klasy abstrakcyjne a dziedziczenie :bricks:
+- przekształcenie modułu _model_ w pakiet:
+    * w przypadku skomplikowanych projektów tworzy się [pakiety](https://docs.python.org/pl/3/tutorial/modules.html#packages), [pakiety przestrzeni nazw](https://realpython.com/python-namespace-package/)
+    * [import bezwzględny](https://realpython.com/absolute-vs-relative-python-imports/#absolute-imports)
+    * [import względny](https://realpython.com/absolute-vs-relative-python-imports/#relative-imports)
+    * zmienna środowiskowa [PYTHONPATH](https://note.nkmk.me/en/python-import-module-search-path/#add-new-module-search-path-with-pythonpath)
+- [klasy abstrakcyjne](https://oscarsierraproject.eu/artykuly/czytaj/python-klasy-abstrakcyjne-i-interfejsy)
+- [_"How to rename a dictionary key in Python"_](https://www.adamsmith.haus/python/answers/how-to-rename-a-dictionary-key-in-python)
+- [_"Python for else"_](https://www.w3schools.com/python/gloss_python_for_else.asp)
+- dziedziczenie (ang. _inheritance_):
+    * [_"Method overriding in Python"_](https://www.thedigitalcatonline.com/blog/2014/05/19/method-overriding-in-python/)
+    * [metoda super()](https://math.uni.wroc.pl/~jagiella/p2python/skrypt_html/wyklad8.html#metody_bazowe)
+    * [polimorfizm](https://www.kodolamacz.pl/blog/wyzwanie-python-5-zaawansowane-aspekty-programowania-obiektowego/#polimorfizm) - co to takiego?
+- [dziedziczenie vs kompozycja](https://helion.pl/blog/dziedziczenie-vs-kompozycja-20) (ang. _inheritance vs composition_) & [_"Kompozycja ponad dziedziczenie"_](https://sarvendev.com/2017/10/kompozycja-ponad-dziedziczenie/)
+- [wzorca projektowe](https://refactoring.guru/pl/design-patterns) poświęcone programowaniu obiektowemu ([Python]( https://refactoring.guru/pl/design-patterns/python)) wzorzec architektoniczny - [Model-Widok-Kontroler](https://pl.wikipedia.org/wiki/Model-View-Controller)
+
+### 6. Wyjątki, dekoratory oraz programowanie funkcyjne :snake:
+- Wyjątek [_Value Error_](https://docs.python.org/pl/3/library/exceptions.html#ValueError)
+- [Tworzenie własnej klasy wyjątku](https://www.geeksforgeeks.org/user-defined-exceptions-python-examples/)
+- Dekoratory (ang. _decorators_):
+    * [film na YT](https://www.youtube.com/watch?v=7fIpdbEtqW4)
+    * [lecture](https://www.icsr.agh.edu.pl/~polak/wyklady/jezyki/skryptowe.pdf#page=36)
+    * [desc1](https://analityk.edu.pl/python-dekoratory/)
+    * [desc2](https://chyla.org/artykuly/python/python-dekoratory.html)
+    * [kwalifikowana nazwa](https://docs.python.org/pl/3/library/stdtypes.html#definition.__qualname__)
+- Programowanie funkcyjne:
+    * [film na YT](https://www.youtube.com/watch?v=cmiMEzu_5Ng)
+    * [lecture](https://www.icsr.agh.edu.pl/~polak/wyklady/jezyki/skryptowe.pdf#page=39)
+    * [desc1](https://www.dobreprogramy.pl/iluzion/Programowanie-funkcyjne-w-Pythonie,25498.html )
+    * [desc2](https://stackabuse.com/functional-programming-in-python/ )
+    * [desc3](https://docs.python.org/pl/3/howto/functional.html )
 
 
 ## Laboratoria :computer:
