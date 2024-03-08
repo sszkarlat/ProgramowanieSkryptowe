@@ -3,7 +3,7 @@ Najważniejszym elementem tegoż laboratorium jest **obsługa plików w formacie
 
 # Co, gdzie jest?
 ## shop.py :shopping:
-Jest to uproszczona wersja Magazyn (ang. _warehouse_) jest na stałe zdefiniowany (ang. _hard-coded_). W pliku tym mamy jedynie zdefiniowaną główną i najważniejszą funckję (_sell/_/product_), która odpowiada za sprzedaż w odpowiedniej ilości poroduktów, na podstawie danych, które klient wprowadził do CLI.
+Jest to uproszczona wersja Magazyn (ang. _warehouse_) jest na stałe zdefiniowany (ang. _hard-coded_). W pliku tym mamy jedynie zdefiniowaną główną i najważniejszą funckję (sell_product), która odpowiada za sprzedaż w odpowiedniej ilości poroduktów, na podstawie danych, które klient wprowadził do CLI.
 
 ## shop_json.py :open_file_folder:
 W tym pliku mamy dla odmiany dane wczytywane z pliku w formacie JSON. Po dokonaniu zakupu, dane są również zapisywane są do pliku warehouse.json
