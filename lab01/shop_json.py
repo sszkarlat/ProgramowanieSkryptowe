@@ -4,19 +4,23 @@ import json
 fileName = "warehouse.json"
 
 
+# Load data into a file (warehouse.json)
 def load_warehouse(fileName):
     with open(fileName, "r") as file:
         return json.load(file)
 
 
+# The warehouse is loaded from the file
 warehouse = load_warehouse(fileName)
 
 
+# Save current warehouse status to the file
 def save_warehouse(fileName, warehouse):
     with open(fileName, "w") as file:
         json.dump(warehouse, file)
 
 
+# Sell ​​products ordered by customer on Command Line
 def sell_product(warehouse, wishList):
     for i in range(0, len(wishList), 2):
         product = wishList[i]
@@ -39,6 +43,7 @@ def sell_product(warehouse, wishList):
     return warehouse
 
 
+# Show current warehouse status
 def show_warehouse_status(warehouse):
     print(
         """-------------+------------

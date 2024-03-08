@@ -1,8 +1,10 @@
 import sys
 
+# The warehouse is hard-coded
 warehouse = {"Komputer": 10, "Laptop": 20}
 
 
+# Sell ​​products ordered by customer on Command Line
 def sell_product(warehouse, wishList):
     for i in range(0, len(wishList), 2):
         product = wishList[i]
@@ -25,6 +27,7 @@ def sell_product(warehouse, wishList):
     return warehouse
 
 
+# Show current warehouse status
 def show_warehouse_status(warehouse):
     print(
         """-------------+------------
